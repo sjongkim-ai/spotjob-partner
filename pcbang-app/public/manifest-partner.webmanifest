@@ -1,0 +1,17 @@
+{
+  "name": "스팟잡 파트너",
+  "short_name": "파트너",
+  "start_url": "./index.html#jobseeker",
+  "display": "standalone",
+  "background_color": "#fffaf0",
+  "theme_color": "#ff7d73",
+  "description": "내게 맞는 스팟 근무를 찾는 파트너 앱",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

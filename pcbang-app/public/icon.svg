@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" role="img" aria-label="스팟잡 아이콘">
+  <rect width="192" height="192" rx="44" fill="#ff7d73"/>
+  <circle cx="96" cy="86" r="52" fill="#fffaf0"/>
+  <path d="M66 94c0-18 13-32 30-32s30 14 30 32-13 32-30 32c-6 0-12-2-17-5l-20 9 7-19c-1-5 0-11 0-17Z" fill="#263653"/>
+  <circle cx="82" cy="91" r="5" fill="#fffaf0"/>
+  <circle cx="96" cy="91" r="5" fill="#fffaf0"/>
+  <circle cx="110" cy="91" r="5" fill="#fffaf0"/>
+</svg>

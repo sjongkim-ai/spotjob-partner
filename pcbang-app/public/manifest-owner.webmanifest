@@ -1,0 +1,17 @@
+{
+  "name": "스팟잡 사장님",
+  "short_name": "사장님",
+  "start_url": "./index.html#pcbang",
+  "display": "standalone",
+  "background_color": "#101b31",
+  "theme_color": "#0b777b",
+  "description": "매장과 파트너를 연결하는 사장님 앱",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

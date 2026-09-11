@@ -1,0 +1,17 @@
+{
+  "name": "스팟잡",
+  "short_name": "스팟잡",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fffaf0",
+  "theme_color": "#263653",
+  "description": "파트너와 사장님을 연결하는 스팟잡 서비스",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
