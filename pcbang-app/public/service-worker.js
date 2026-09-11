@@ -1,4 +1,4 @@
-const CACHE_NAME = 'spotjob-v6';
+const CACHE_NAME = 'spotjob-v7';
 const APP_SHELL = [
   './',
   './index.html',
@@ -10,7 +10,18 @@ const APP_SHELL = [
   './icon.svg',
   './icon-180.png',
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  './js/legal.js',
+  './js/schema.js',
+  './js/matching.js',
+  './js/workflow.js',
+  './js/seed.js',
+  './js/dom.js',
+  './js/store.js',
+  './js/ui-partner.js',
+  './js/ui-owner.js',
+  './js/ui-admin.js',
+  './js/app.js'
 ];
 
 self.addEventListener('install', event => {
@@ -34,24 +45,20 @@ function saveToCache(request, response) {
   return response;
 }
 
+// 같은 출처 파일은 모두 네트워크 우선 — HTML과 JS가 서로 다른 버전으로 섞이지 않게 하고,
+// 오프라인일 때만 저장본을 쓴다. 외부 파일(구글 폰트·카카오 이미지)은 브라우저 기본 동작에 맡김
 self.addEventListener('fetch', event => {
   const { request } = event;
   if (request.method !== 'GET') return;
-  // 외부 파일(구글 폰트·카카오 이미지)은 브라우저 기본 동작에 맡김
   if (new URL(request.url).origin !== self.location.origin) return;
 
-  // 페이지(HTML)는 네트워크 우선 → 수정 사항이 바로 반영되고, 오프라인일 때만 저장본 사용
-  if (request.mode === 'navigate') {
-    event.respondWith(
-      fetch(request)
-        .then(response => saveToCache(request, response))
-        .catch(() => caches.match(request, { ignoreSearch: true }).then(cached => cached || caches.match('./index.html')))
-    );
-    return;
-  }
-
-  // 아이콘·매니페스트 등 정적 파일은 저장본 우선
   event.respondWith(
-    caches.match(request).then(cached => cached || fetch(request).then(response => saveToCache(request, response)))
+    fetch(request)
+      .then(response => saveToCache(request, response))
+      .catch(() => caches.match(request, { ignoreSearch: true }).then(cached => {
+        if (cached) return cached;
+        if (request.mode === 'navigate') return caches.match('./index.html');
+        return Response.error();
+      }))
   );
 });

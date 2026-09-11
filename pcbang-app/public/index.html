@@ -2140,22 +2140,16 @@
         #jobseeker[data-subtab="profile"] .partner-support-hub,
         #jobseeker[data-subtab="profile"] .partner-screen-grid .screen-card:not(:nth-child(1)):not(:nth-child(2)),
         #jobseeker[data-subtab="jobs"] .partner-support-hub,
-        #jobseeker[data-subtab="jobs"] .partner-screen-grid .screen-card:not(:nth-child(3)),
-        #jobseeker[data-subtab="contract"] .partner-market-map,
-        #jobseeker[data-subtab="contract"] .partner-support-hub,
-        #jobseeker[data-subtab="contract"] .partner-screen-grid .screen-card:not(:nth-child(4)):not(:nth-child(6)),
+        #jobseeker[data-subtab="jobs"] .partner-screen-grid .screen-card:not(:nth-child(3)):not(:nth-child(4)),
         #jobseeker[data-subtab="applications"] .partner-market-map,
         #jobseeker[data-subtab="applications"] .partner-support-hub,
-        #jobseeker[data-subtab="applications"] .partner-screen-grid .screen-card:not(:nth-child(5)),
+        #jobseeker[data-subtab="applications"] .partner-screen-grid .screen-card:not(:nth-child(5)):not(:nth-child(6)),
         #jobseeker[data-subtab="help"] .partner-market-map,
         #jobseeker[data-subtab="help"] .partner-screen-grid,
         #pcbang[data-subtab="store"] .owner-location-board,
         #pcbang[data-subtab="store"] .owner-screen-grid .screen-card:not(:nth-child(1)):not(:nth-child(2)),
         #pcbang[data-subtab="matching"] .owner-helper,
-        #pcbang[data-subtab="matching"] .owner-screen-grid .screen-card:not(:nth-child(3)):not(:nth-child(4)),
-        #pcbang[data-subtab="settlement"] .owner-location-board,
-        #pcbang[data-subtab="settlement"] .owner-helper,
-        #pcbang[data-subtab="settlement"] .owner-screen-grid .screen-card:not(:nth-child(5)) {
+        #pcbang[data-subtab="matching"] .owner-screen-grid .screen-card:not(:nth-child(3)):not(:nth-child(4)):not(:nth-child(5)) {
             display: none;
         }
 
@@ -2497,6 +2491,71 @@
             .owner-check-list { grid-template-columns: repeat(2, 1fr); }
             .support-composer { grid-template-columns: 1fr; }
         }
+
+        /* 프로필 위저드 · 채용 체크리스트 · 어드민 */
+        .empty-state { padding: 14px; border: 1px dashed var(--line); border-radius: 10px; color: var(--ink-soft); font-size: 0.82rem; text-align: center; }
+        .job-item.selected,
+        .applicant-card.selected { border-color: var(--coral); box-shadow: 0 0 0 3px rgba(255, 125, 115, 0.18); }
+        .job-item-kicker { margin-bottom: 4px; color: var(--teal-deep); font-size: 0.78em; font-weight: 700; }
+        .applicant-card { cursor: pointer; }
+        .wizard-steps { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
+        .wizard-step { flex: 1 1 auto; padding: 6px 8px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink-soft); cursor: pointer; font: inherit; font-size: 0.7rem; font-weight: 800; }
+        .wizard-step.current { border-color: var(--teal-deep); background: var(--teal-deep); color: #fff; }
+        .profile-progress { margin-bottom: 12px; }
+        .progress-bar { height: 8px; overflow: hidden; border-radius: 999px; background: #e8edf5; }
+        .progress-bar span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--teal), var(--coral)); transition: width 0.3s ease; }
+        .chip-group,
+        .day-picker { display: flex; flex-wrap: wrap; gap: 6px; }
+        .day-picker { margin-top: 6px; }
+        .chip { display: inline-flex; align-items: center; gap: 4px; padding: 5px 9px; border: 1px solid var(--line); border-radius: 999px; background: #fff; cursor: pointer; font-size: 0.76rem; }
+        .chip.on,
+        .chip:has(input:checked) { border-color: var(--teal); background: #e9fbf7; color: var(--teal-deep); font-weight: 700; }
+        .chip input { margin: 0; }
+        .program-row,
+        .history-row,
+        .yesno-row,
+        .weight-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 0.82rem; }
+        .program-row .form-select { max-width: 60%; }
+        .history-row { flex-wrap: wrap; }
+        .history-form { display: grid; gap: 6px; margin: 8px 0; padding: 8px; border-radius: 10px; background: #f6fafb; }
+        .yesno-row span:first-child { flex: 1; font-weight: 700; }
+        .yesno-row label { display: inline-flex; align-items: center; gap: 3px; font-size: 0.78rem; }
+        .required-mark { color: var(--coral); }
+        .muted-badge { background: #b8c2cf !important; }
+        .avail-scroll { overflow-x: auto; }
+        .avail-grid { width: 100%; border-collapse: collapse; font-size: 0.7rem; }
+        .avail-grid th,
+        .avail-grid td { padding: 3px; border-bottom: 1px solid var(--line); text-align: center; }
+        .avail-grid tbody th { font-weight: 700; text-align: left; white-space: nowrap; }
+        .step-track { display: flex; flex-wrap: wrap; gap: 3px; margin: 6px 0; }
+        .step { padding: 2px 6px; border-radius: 999px; background: #edf1f5; color: #8a96a8; font-size: 0.66rem; font-weight: 700; }
+        .step.done { background: #d9f4ee; color: var(--teal-deep); }
+        .step.current { background: var(--teal-deep); color: #fff; }
+        .status-ended { background: #e6e9ee; color: #69727f; }
+        .application-card { margin-bottom: 8px; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+        .badge-line { display: flex; flex-wrap: wrap; gap: 2px; margin: 4px 0; }
+        .shop-facts,
+        .doc-guide,
+        .intro-text { margin: 8px 0 12px; padding: 8px 10px; border-radius: 10px; background: #f6fafb; }
+        .intro-text { font-size: 0.8rem; white-space: pre-line; }
+        .doc-line { flex: 1; }
+        .score-breakdown { margin: 10px 0; font-size: 0.78rem; }
+        .score-breakdown summary { cursor: pointer; font-weight: 800; }
+        .score-breakdown ul { margin: 6px 0 0 18px; }
+        .checklist .owner-check { flex-shrink: 0; width: 20px; height: 20px; margin-right: 8px; }
+        .queue-count { margin-bottom: 8px; color: var(--teal-deep); font-size: 0.85em; font-weight: 700; }
+        .audit-list { max-height: 260px; margin: 0; padding-left: 0; overflow-y: auto; list-style: none; font-size: 0.72rem; }
+        .audit-list li { padding: 5px 0; border-bottom: 1px solid var(--line); }
+        .audit-meta { color: var(--ink-soft); }
+        .weight-grid { display: grid; gap: 2px; }
+        .weight-input { max-width: 90px; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+        body.owner-app .screen-content .application-card,
+        body.owner-app .screen-content .shop-facts,
+        body.owner-app .screen-content .history-form,
+        body.owner-app .screen-content .intro-text,
+        body.owner-app .screen-content .chip,
+        body.owner-app .screen-content .empty-state { border-color: #49647b; background: #173650; color: #eef7ff; }
     </style>
 </head>
 <body>
@@ -2550,8 +2609,7 @@
             <nav class="app-subnav" aria-label="스팟 파트너 메뉴">
                 <button type="button" data-subtab="profile" onclick="switchAppSubtab('jobseeker', 'profile', this)">👤 가입·내 정보</button>
                 <button class="active" type="button" data-subtab="jobs" onclick="switchAppSubtab('jobseeker', 'jobs', this)">🔎 공고 찾기</button>
-                <button type="button" data-subtab="contract" onclick="switchAppSubtab('jobseeker', 'contract', this)">📝 계약·권리</button>
-                <button type="button" data-subtab="applications" onclick="switchAppSubtab('jobseeker', 'applications', this)">📌 내 지원</button>
+                <button type="button" data-subtab="applications" onclick="switchAppSubtab('jobseeker', 'applications', this)">📌 내 지원·서류</button>
                 <button type="button" data-subtab="help" onclick="switchAppSubtab('jobseeker', 'help', this)">💬 도움방</button>
             </nav>
             <section class="welcome-hero" aria-label="스팟잡 파트너 소개">
@@ -2633,7 +2691,7 @@
                         <div class="screen-content">
                             <div class="header-bar">가입 · 본인인증</div>
                             <div class="profile-section">
-                                <strong>5단계 중 1단계예요</strong>
+                                <strong>본인 확인 후 내 정보(5단계)를 채워요</strong>
                             </div>
                             <div class="form-group">
                                 <div class="form-label">📱 휴대폰 번호</div>
@@ -2650,6 +2708,7 @@
                                 <div class="form-label">📅 생년월일</div>
                                 <div class="why-note">밤 시간 근무 가능 여부와 필요한 서류를 정확히 안내하려고 확인해요.</div>
                                 <input type="date" class="form-input" id="birthDate" onchange="handleBirthDateChange()">
+                                <div class="option-caption">시안에서는 직접 입력해요. 실서비스에서는 PASS 본인인증 결과로만 받아요.</div>
                             </div>
                             <div class="alert alert-warning" id="ageAlert" style="display:none;">
                                 <strong id="ageAlertTitle">⚠️ 18세 미만 스팟 파트너</strong><br/>
@@ -2673,36 +2732,9 @@
                 <div class="screen-card">
                     <div class="screen-phone">
                         <div class="screen-content">
-                            <div class="header-bar">내 정보 작성 · 2단계</div>
-                            <div class="form-group">
-                                <div class="form-label">👨‍💼 경력 정보</div>
-                                <div class="why-note">잘할 수 있는 일을 매장에 미리 보여드리면 더 잘 맞는 공고를 찾을 수 있어요.</div>
-                                <div class="checkbox-group">
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" checked> PC방 경력 있음
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox"> 3년 이상
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" checked> 야간근무 경험
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox"> 혼자 근무 경험
-                                    </label>
-                                </div>
-                            </div>
+                            <div class="header-bar">내 정보 작성</div>
+                            <div id="profileWizard"></div>
                             <div class="divider"></div>
-                            <div class="form-group">
-                                <div class="form-label">💻 프로그램 숙련도</div>
-                                <div class="why-note">매장에서 쓰는 프로그램과 익숙한 정도를 미리 알려주면 첫날이 더 편해요.</div>
-                                <select class="form-select">
-                                    <option>게토 마스터</option>
-                                    <option selected>게토 중급</option>
-                                    <option>게토 초급</option>
-                                    <option>피카 경험</option>
-                                </select>
-                            </div>
                             <div class="option-panel">
                                 <div class="option-title">⚡ 스팟·긴급 알림 설정</div>
                                 <div class="why-note">내가 갈 수 있는 거리의 급한 공고를 놓치지 않도록 알려드려요.</div>
@@ -2722,8 +2754,6 @@
                                 </div>
                                 <div class="push-status" id="pushPreferenceStatus">스팟·긴급 알림 ON · 5km 이내</div>
                             </div>
-                            <button class="btn btn-primary" type="button" onclick="savePartnerProfile()">저장해요</button>
-                            <button class="btn btn-secondary" type="button" onclick="window.alert('이전 단계로 돌아갈 준비를 하고 있어요.')">이전으로 가요</button>
                         </div>
                     </div>
                     <div class="screen-title">
@@ -2825,57 +2855,8 @@
                                     <button class="btn btn-primary" type="button" onclick="openDirections()">길찾기 열기</button>
                                 </div>
                             </div>
-                            <div class="job-list" id="jobList">
-                                <div class="job-item" data-shift="day" data-type="pcbang" data-term="long" data-urgent="false" data-distance="1.8" data-start="09:00" data-end="22:00" data-days="weekday weekend" data-store="강남 PC방" data-address="서울 강남구 테헤란로 123" onclick="showJobLocation(this)">
-                                    <div style="font-size: 0.8em; color: #667eea; font-weight: 600; margin-bottom: 4px;">🏛 PC방 · 📅 월간</div>
-                                    <div class="job-item-title">🏢 강남 PC방</div>
-                                    <div class="job-item-info">시급: 10,320원</div>
-                                    <div class="job-item-info">위치: 서울 강남구</div>
-                                    <div class="job-item-info">⏰ 시간: 09:00 ~ 22:00</div>
-                                    <div class="job-item-info">📍 매장까지 약 1.8km · 도보 24분</div>
-                                    <div style="margin-top: 4px;">
-                                        <span class="badge">주간 근무</span>
-                                        <span class="badge">흡연부스 청소</span>
-                                    </div>
-                                        <div class="save-actions">
-                                            <button class="save-button" type="button" onclick="event.stopPropagation(); toggleStorePreference(this, '강남 PC방', 'interest')">♡ 관심 매장으로 저장해요</button>
-                                            <button class="save-button muted" type="button" onclick="event.stopPropagation(); toggleStorePreference(this, '강남 PC방', 'muted')">🔕 알림을 끄고 싶어요</button>
-                                        </div>
-                                </div>
-                                <div class="job-item" data-shift="night" data-type="cafe" data-term="short" data-urgent="true" data-distance="4.2" data-start="22:00" data-end="07:00" data-days="weekend" data-store="명동 카페" data-address="서울 중구 명동길 28" onclick="showJobLocation(this)">
-                                    <div style="font-size: 0.8em; color: #667eea; font-weight: 600; margin-bottom: 4px;">☕ 카페 · 📅 스팟</div>
-                                    <span class="urgent-badge">⚡ 오늘 22:00까지 모집 · 추가 20,000원</span>
-                                    <div class="job-item-title">🏢 명동 카페</div>
-                                    <div class="job-item-info">시급: 10,500원</div>
-                                    <div class="job-item-info">위치: 서울 중구</div>
-                                    <div class="job-item-info">⏰ 시간: 22:00 ~ 07:00</div>
-                                    <div class="job-item-info">📍 매장까지 약 4.2km · 대중교통 18분</div>
-                                    <div style="margin-top: 4px;">
-                                        <span class="badge important">야간 배치</span>
-                                        <span class="badge">주말/평일선택</span>
-                                    </div>
-                                    <div class="save-actions">
-                                        <button class="save-button" type="button" onclick="event.stopPropagation(); toggleStorePreference(this, '명동 카페', 'interest')">♡ 관심 매장으로 저장해요</button>
-                                        <button class="save-button muted" type="button" onclick="event.stopPropagation(); toggleStorePreference(this, '명동 카페', 'muted')">🔕 알림을 끄고 싶어요</button>
-                                    </div>
-                                </div>
-                                <div class="job-item" data-shift="day" data-type="cvs" data-term="short" data-urgent="true" data-distance="2.4" data-start="14:00" data-end="22:00" data-days="weekday weekend" data-store="강남역 CU" data-address="서울 강남구 강남대로 390" onclick="showJobLocation(this)">
-                                    <div style="font-size: 0.8em; color: #667eea; font-weight: 600; margin-bottom: 4px;">🏪 편의점 · 📅 스팟</div>
-                                    <span class="urgent-badge">⚡ 오늘 18:00까지 모집 · 추가 10,000원</span>
-                                    <div class="job-item-title">🏢 강남역 CU</div>
-                                    <div class="job-item-info">시급: 10,320원</div>
-                                    <div class="job-item-info">위치: 서울 강남구</div>
-                                    <div class="job-item-info">⏰ 시간: 14:00 ~ 22:00 (일 3회 선택가능)</div>
-                                    <div style="margin-top: 4px;">
-                                        <span class="badge">매우 유연</span>
-                                        <span class="badge">즉시시작</span>
-                                    </div>
-                                    <div class="save-actions">
-                                        <button class="save-button" type="button" onclick="event.stopPropagation(); toggleStorePreference(this, '강남역 CU', 'interest')">♡ 관심 매장으로 저장해요</button>
-                                        <button class="save-button muted" type="button" onclick="event.stopPropagation(); toggleStorePreference(this, '강남역 CU', 'muted')">🔕 알림을 끄고 싶어요</button>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="job-list" id="jobList"></div>
+                            <div class="empty-state" id="jobListEmpty" hidden>조건에 맞는 공고가 없어요. 필터를 바꿔 보세요.</div>
                         </div>
                     </div>
                     <div class="screen-title">
@@ -2889,30 +2870,7 @@
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">공고 상세</div>
-                            <div class="section-title">⭐ 주요 정보</div>
-                            <div class="alert alert-warning">
-                                <strong>야간 혼자 근무</strong> - 22:00~07:00 단독
-                            </div>
-                            <div class="alert alert-warning">
-                                <strong>흡연부스 청소 포함</strong>
-                            </div>
-                            <div class="section-title">직무 상세</div>
-                            <div class="detail-row">
-                                <span class="detail-label">시급</span>
-                                <span class="detail-value">10,320원</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">근무 형태</span>
-                                <span class="detail-value">월간 파트너</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">프로그램</span>
-                                <span class="detail-value">게토</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">조리</span>
-                                <span class="detail-value">라면/김밥</span>
-                            </div>
+                            <div id="postingDetail"></div>
                             <div class="tax-card warn">
                                 <div class="tax-card-title">
                                     <span>📝 간편 계약서</span>
@@ -2925,7 +2883,7 @@
                                 </label>
                             </div>
                             <div class="feature-alert warn"><strong>지원 전에 한 번만 확인해요</strong><span>지원하면 매장에 프로필과 희망 근무 조건이 전달돼요. 괜찮은 조건인지 살펴본 뒤 진행해요.</span></div>
-                            <button class="btn btn-primary" style="margin-top: 12px;" data-start="22:00" data-end="07:00" onclick="confirmJobApplication(this)">이 공고에 지원해요</button>
+                            <button class="btn btn-primary" style="margin-top: 12px;" id="applyButton" type="button" onclick="confirmJobApplication()">이 공고에 지원해요</button>
                         </div>
                     </div>
                     <div class="screen-title">
@@ -2939,24 +2897,7 @@
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">내 지원 현황</div>
-                            <div class="timeline">
-                                <div class="timeline-item active">
-                                    <span class="status-badge status-docs">서류 심사 중</span>
-                                    <div class="timeline-time">강남 PC방 · 2026.09.08</div>
-                                </div>
-                                <div class="timeline-item">
-                                    <span class="status-badge status-interview">면접 대기</span>
-                                    <div class="timeline-time">명동 PC방 · 2026.09.05</div>
-                                </div>
-                                <div class="timeline-item">
-                                    <span class="status-badge status-hired">채용 확정!</span>
-                                    <div class="timeline-time">강남역 PC방 · 2026.08.30</div>
-                                </div>
-                                <div class="timeline-item">
-                                    <span class="status-badge" style="background: #e0e0e0; color: #666;">거절됨</span>
-                                    <div class="timeline-time">종로 PC방</div>
-                                </div>
-                            </div>
+                            <div id="myApplications"></div>
                             <div class="tax-card">
                                 <div class="tax-card-title">
                                     <span>💰 이번 달 급여 예상</span>
@@ -2987,26 +2928,7 @@
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">18세 미만 파트너 서류</div>
-                            <div class="alert alert-warning">
-                                <strong>⚠️ 18세 미만</strong><br/>
-                                안전한 근무를 위해 추가 서류가 필요할 수 있어요.
-                            </div>
-                            <div class="checklist">
-                                <li class="checklist-item">
-                                    <span class="checklist-icon">✓</span>
-                                    <span><strong>가족관계증명서</strong><br><span class="fs-small text-muted">공공서비스에서 발급해요</span></span>
-                                </li>
-                                <li class="checklist-item">
-                                    <span class="checklist-icon">✓</span>
-                                    <span><strong>보호자 동의서</strong><br><span class="fs-small text-muted">양식을 내려받아요</span></span>
-                                </li>
-                                <li class="checklist-item">
-                                    <span class="checklist-icon"></span>
-                                    <span><strong>서류 사진 업로드</strong><br><span class="fs-small text-muted">명확한 사진 필수</span></span>
-                                </li>
-                            </div>
-                            <div class="why-note">미성년 파트너는 안전한 근무를 위해 추가 서류가 필요할 수 있어요.</div>
-                            <button class="btn btn-primary mt-2" type="button" onclick="choosePartnerDocument()">서류를 골라요</button>
+                            <div id="minorDocsPanel"></div>
                         </div>
                     </div>
                     <div class="screen-title">
@@ -3028,8 +2950,7 @@
             </div>
             <nav class="app-subnav" aria-label="사장님 메뉴">
                 <button class="active" type="button" data-subtab="store" onclick="switchAppSubtab('pcbang', 'store', this)">🏪 매장·공고</button>
-                <button type="button" data-subtab="matching" onclick="switchAppSubtab('pcbang', 'matching', this)">🤝 지원자·매칭</button>
-                <button type="button" data-subtab="settlement" onclick="switchAppSubtab('pcbang', 'settlement', this)">🧾 계약·정산</button>
+                <button type="button" data-subtab="matching" onclick="switchAppSubtab('pcbang', 'matching', this)">🤝 지원자·채용</button>
             </nav>
             <section class="welcome-hero" aria-label="사장님 서비스 소개">
                 <div class="welcome-copy">
@@ -3101,12 +3022,13 @@
                             <div class="form-group">
                                 <div class="form-label">사업자 등록번호</div>
                                 <div class="why-note">실제로 운영하는 매장인지 확인해야 파트너가 안심하고 지원할 수 있어요.</div>
-                                <input type="text" class="form-input" placeholder="000-00-00000">
+                                <input type="text" class="form-input" id="bizRegNo" placeholder="000-00-00000" maxlength="12" inputmode="numeric" oninput="OwnerUI.onBizRegNoInput(this)">
+                                <div class="fs-small text-muted" id="bizRegNoStatus">숫자 10자리를 입력해 주세요.</div>
                             </div>
                             <div class="form-group">
                                 <div class="form-label">매장명</div>
                                 <div class="why-note">파트너가 어떤 매장인지 바로 알아볼 수 있어요.</div>
-                                <input type="text" class="form-input" placeholder="예: 강남 PC방">
+                                <input type="text" class="form-input" id="shopName" placeholder="예: 강남 PC방" maxlength="30">
                             </div>
                             <div class="form-group">
                                 <div class="form-label">주소</div>
@@ -3125,7 +3047,67 @@
                                 <div class="form-label">📞 연락처</div>
                                 <input type="text" class="form-input" id="phoneShop" placeholder="02-0000-0000" oninput="formatPhoneNumber(this)" maxlength="13">
                             </div>
-                            <button class="btn btn-primary" onclick="confirmStoreRegistration()">매장 등록을 신청해요</button>
+                            <div class="section-title">🏪 매장 정보</div>
+                            <div class="inline-fields">
+                                <div class="form-group">
+                                    <div class="form-label">층</div>
+                                    <input type="text" class="form-input" id="shopFloor" placeholder="예: 지하 1층" maxlength="20">
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-label">좌석 수</div>
+                                    <input type="number" class="form-input" id="seatCount" min="1" placeholder="예: 80">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-label">좌석관리 프로그램</div>
+                                <div class="why-note">파트너가 다룰 줄 아는 프로그램과 맞춰 먼저 보여드려요.</div>
+                                <select class="form-select" id="shopPosProgram">
+                                    <option value="">선택해 주세요</option>
+                                    <option value="GETO">게토</option>
+                                    <option value="PICA">피카</option>
+                                    <option value="MEDIAWEB">미디어웹</option>
+                                    <option value="IZONE">아이존</option>
+                                    <option value="PCMATE">PC메이트</option>
+                                    <option value="ETC">기타</option>
+                                </select>
+                            </div>
+                            <div class="inline-fields">
+                                <div class="form-group">
+                                    <div class="form-label">교대당 근무 인원</div>
+                                    <input type="number" class="form-input" id="staffPerShift" min="1" placeholder="예: 1">
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-label">조리 메뉴 수</div>
+                                    <input type="number" class="form-input" id="cookMenuCount" min="0" placeholder="예: 12">
+                                </div>
+                            </div>
+                            <div class="section-title">⚠️ 꼭 알려주세요 <span class="required-mark">(필수)</span></div>
+                            <div class="why-note">파트너가 면접에 가서야 알게 되는 두 가지예요. 미리 알려주면 믿고 지원해요.</div>
+                            <div class="yesno-row"><span>야간 혼자 근무</span><label><input type="radio" name="nightSolo" value="yes"> 있음</label><label><input type="radio" name="nightSolo" value="no"> 없음</label></div>
+                            <div class="yesno-row"><span>흡연부스 청소 포함</span><label><input type="radio" name="smokingBooth" value="yes"> 포함</label><label><input type="radio" name="smokingBooth" value="no"> 없음</label></div>
+                            <div class="section-title">운영 · 근무 조건</div>
+                            <div class="yesno-row"><span>24시간 운영</span><label><input type="radio" name="is24h" value="yes"> 예</label><label><input type="radio" name="is24h" value="no"> 아니요</label></div>
+                            <div class="yesno-row"><span>프랜차이즈</span><label><input type="radio" name="isFranchise" value="yes"> 예</label><label><input type="radio" name="isFranchise" value="no"> 아니요</label></div>
+                            <input type="text" class="form-input" id="franchiseBrand" placeholder="프랜차이즈 브랜드 (해당할 때만)" maxlength="30" style="margin: 6px 0;">
+                            <div class="yesno-row"><span>4대보험 가입</span><label><input type="radio" name="insurance" value="yes"> 예</label><label><input type="radio" name="insurance" value="no"> 아니요</label></div>
+                            <div class="yesno-row"><span>식사 제공</span><label><input type="radio" name="mealProvided" value="yes"> 예</label><label><input type="radio" name="mealProvided" value="no"> 아니요</label></div>
+                            <div class="yesno-row"><span>근무 외 PC 이용</span><label><input type="radio" name="freePcUse" value="yes"> 예</label><label><input type="radio" name="freePcUse" value="no"> 아니요</label></div>
+                            <div class="yesno-row"><span>야간 수당</span><label><input type="radio" name="nightAllowance" value="yes"> 예</label><label><input type="radio" name="nightAllowance" value="no"> 아니요</label></div>
+                            <div class="yesno-row"><span>만 18세 미만 채용 의사</span><label><input type="radio" name="hiresMinor" value="yes"> 예</label><label><input type="radio" name="hiresMinor" value="no"> 아니요</label></div>
+                            <div class="form-group" style="margin-top: 8px;">
+                                <div class="form-label">청소 범위</div>
+                                <div class="chip-group">
+                                    <label class="chip"><input type="checkbox" name="cleanScope" value="FLOOR"> 바닥</label>
+                                    <label class="chip"><input type="checkbox" name="cleanScope" value="TOILET"> 화장실</label>
+                                    <label class="chip"><input type="checkbox" name="cleanScope" value="SMOKING_BOOTH"> 흡연부스</label>
+                                    <label class="chip"><input type="checkbox" name="cleanScope" value="KITCHEN"> 주방</label>
+                                    <label class="chip"><input type="checkbox" name="cleanScope" value="PC_CLEANING"> PC 청소</label>
+                                    <label class="chip"><input type="checkbox" name="cleanScope" value="TRASH"> 쓰레기</label>
+                                </div>
+                            </div>
+                            <div class="feature-alert"><strong>사업자 확인</strong><span>지금은 번호 형식과 검증번호만 확인해요. 국세청 진위확인은 서버 연동 후 자동으로 해요.</span></div>
+                            <button class="btn btn-primary" type="button" onclick="confirmStoreRegistration()">매장 등록을 신청해요</button>
+                            <div class="fs-small text-success" id="shopRegisterResult" aria-live="polite"></div>
                         </div>
                     </div>
                     <div class="screen-title">
@@ -3139,6 +3121,13 @@
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">공고 등록</div>
+                            <div id="ownerShopPanel"></div>
+                            <div id="templatePanel"></div>
+                            <div class="form-group">
+                                <div class="form-label">📝 공고 제목</div>
+                                <div class="why-note">어떤 자리인지 한눈에 알 수 있게 짧게 적어요.</div>
+                                <input type="text" class="form-input" id="postingTitle" placeholder="예: 주말 낮 카운터" maxlength="40">
+                            </div>
                             <div class="form-group">
                                 <div class="form-label">시급</div>
                                 <div class="why-note">파트너가 받는 돈을 미리 알 수 있어야 공정하게 선택할 수 있어요.</div>
@@ -3166,10 +3155,23 @@
                                 <div class="form-label">⏰ 근무 시간</div>
                                 <div class="why-note">근무 시간을 보고 만 18세 미만도 지원할 수 있는 공고인지 앱이 자동으로 판단해요.</div>
                                 <div class="inline-fields">
-                                    <input type="time" class="form-input" id="shiftStart" value="14:00" aria-label="근무 시작 시간" oninput="updateMinorAllowedStatus()">
-                                    <input type="time" class="form-input" id="shiftEnd" value="22:00" aria-label="근무 종료 시간" oninput="updateMinorAllowedStatus()">
+                                    <input type="time" class="form-input" id="shiftStart" value="10:00" aria-label="근무 시작 시간" oninput="updateMinorAllowedStatus()">
+                                    <input type="time" class="form-input" id="shiftEnd" value="17:00" aria-label="근무 종료 시간" oninput="updateMinorAllowedStatus()">
+                                </div>
+                                <div class="day-picker" aria-label="근무 요일">
+                                    <label class="chip"><input type="checkbox" name="workDay" value="MON" onchange="updateMinorAllowedStatus()"> 월</label>
+                                    <label class="chip"><input type="checkbox" name="workDay" value="TUE" onchange="updateMinorAllowedStatus()"> 화</label>
+                                    <label class="chip"><input type="checkbox" name="workDay" value="WED" onchange="updateMinorAllowedStatus()"> 수</label>
+                                    <label class="chip"><input type="checkbox" name="workDay" value="THU" onchange="updateMinorAllowedStatus()"> 목</label>
+                                    <label class="chip"><input type="checkbox" name="workDay" value="FRI" onchange="updateMinorAllowedStatus()"> 금</label>
+                                    <label class="chip"><input type="checkbox" name="workDay" value="SAT" checked onchange="updateMinorAllowedStatus()"> 토</label>
+                                    <label class="chip"><input type="checkbox" name="workDay" value="SUN" checked onchange="updateMinorAllowedStatus()"> 일</label>
                                 </div>
                                 <div class="alert" id="minorAllowedStatus" style="margin-top: 8px;" aria-live="polite"></div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-label">👥 모집 인원</div>
+                                <input type="number" class="form-input" id="headcountInput" min="1" value="1">
                             </div>
                             <div class="option-panel">
                                 <div class="option-title">📍 공고 위치 안내</div>
@@ -3198,9 +3200,9 @@
                                 <div class="form-label">📅 근무 형태</div>
                                 <div class="why-note">개월 정산인지 시간 정산인지 분명해야 파트너와 오해가 생기지 않아요.</div>
                                 <select class="form-select" id="jobTermSelect" onchange="updateRecruitmentOptions()">
-                                    <option selected>월간 파트너 (개월 정산)</option>
-                                    <option>스팟 파트너 (시간 정산)</option>
-                                    <option>월간·스팟 모두</option>
+                                    <option value="LONG_TERM" selected>장기 · 월간 파트너</option>
+                                    <option value="SHORT_TERM">단기 파트너 (몇 주~몇 달)</option>
+                                    <option value="SPOT">스팟 파트너 (시간 정산)</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -3211,6 +3213,20 @@
                                     <option>매니저 파트너 (수개월)</option>
                                     <option>⚡ 긴급 파트너 (24시간 내)</option>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-label">🧾 맡을 업무</div>
+                                <div class="why-note">파트너의 운영 경험과 맞춰 적합도를 계산해요.</div>
+                                <div class="chip-group">
+                                    <label class="chip"><input type="checkbox" name="duty" value="COUNTER" checked> 카운터</label>
+                                    <label class="chip"><input type="checkbox" name="duty" value="COOKING"> 조리</label>
+                                    <label class="chip"><input type="checkbox" name="duty" value="CLEANING" checked> 청소</label>
+                                    <label class="chip"><input type="checkbox" name="duty" value="PC_SUPPORT"> PC 대응</label>
+                                    <label class="chip"><input type="checkbox" name="duty" value="ID_CHECK"> 신분증 확인</label>
+                                    <label class="chip"><input type="checkbox" name="duty" value="INVENTORY"> 재고 관리</label>
+                                    <label class="chip"><input type="checkbox" name="duty" value="OPENING"> 오픈</label>
+                                    <label class="chip"><input type="checkbox" name="duty" value="CLOSING"> 마감</label>
+                                </div>
                             </div>
                             <div class="option-panel urgent" id="urgentRecruitmentOptions" style="display: none;">
                                 <div class="option-title">⚡ 긴급 조건</div>
@@ -3241,19 +3257,14 @@
                             <div class="form-group" id="programGroup">
                                 <div class="form-label">⚙️ 필수 프로그램</div>
                                 <div class="why-note">첫날부터 일을 시작할 수 있도록 필요한 프로그램을 미리 알려줘요.</div>
-                                <select class="form-select">
-                                    <option selected>게토</option>
-                                    <option>피카</option>
-                                    <option>무관</option>
+                                <select class="form-select" id="requiredPos">
+                                    <option value="" selected>무관 (매장 프로그램 기준으로 점수 계산)</option>
+                                    <option value="GETO">게토</option>
+                                    <option value="PICA">피카</option>
+                                    <option value="MEDIAWEB">미디어웹</option>
+                                    <option value="IZONE">아이존</option>
+                                    <option value="PCMATE">PC메이트</option>
                                 </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="checkbox-item">
-                                    <input type="checkbox" checked> 야간 혼자 근무
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" checked> 흡연부스 청소 포함
-                                </label>
                             </div>
                             <div class="tax-card warn">
                                 <div class="tax-card-title">
@@ -3284,7 +3295,9 @@
                                 </div>
                             </div>
                             <div class="feature-alert warn"><strong>공고 등록 전에 한 번 확인해요</strong><span>시급·근무시간·계약기간·위치·급여 지급일을 확인해요. 등록 후 스팟 파트너에게 보여요.</span></div>
-                            <button class="btn btn-primary" onclick="confirmJobPosting()">공고를 등록해요</button>
+                            <button class="btn btn-primary" type="button" onclick="confirmJobPosting()">공고를 등록해요</button>
+                            <div class="section-title">📋 내 공고</div>
+                            <div id="ownerPostingList"></div>
                         </div>
                     </div>
                     <div class="screen-title">
@@ -3297,41 +3310,8 @@
                 <div class="screen-card">
                     <div class="screen-phone">
                         <div class="screen-content">
-                            <div class="header-bar">강남 PC방 지원자</div>
-                            <div style="font-size: 0.85em; margin-bottom: 8px; color: #666;">
-                                잘 맞는 순서로 보고 있어요
-                            </div>
-                            <div class="applicant-card">
-                                <div class="applicant-name">김철수 (26)</div>
-                                <div style="font-size: 0.85em; color: #666; margin: 4px 0;">
-                                    게토 마스터 • 3년 경력
-                                </div>
-                                <div class="applicant-score">⭐ 잘 맞는 정도 95점</div>
-                                <div class="save-actions">
-                                    <button class="save-button" type="button" onclick="togglePartnerPreference(this, '김철수', 'preferred')">♡ 다시 함께하고 싶어요</button>
-                                </div>
-                            </div>
-                            <div class="applicant-card">
-                                <div class="applicant-name">이민지 (17)</div>
-                                <div style="font-size: 0.85em; color: #666; margin: 4px 0;">
-                                    게토 중급 • 주말 낮 가능
-                                </div>
-                                <div class="applicant-score">⭐ 잘 맞는 정도 82점</div>
-                                <div class="badge minor" style="display: block; margin-top: 4px;">18세 미만</div>
-                                <div class="save-actions">
-                                    <button class="save-button" type="button" onclick="togglePartnerPreference(this, '이민지', 'preferred')">♡ 다시 함께하고 싶어요</button>
-                                </div>
-                            </div>
-                            <div class="applicant-card">
-                                <div class="applicant-name">박영호 (31)</div>
-                                <div style="font-size: 0.85em; color: #666; margin: 4px 0;">
-                                    피카 경험
-                                </div>
-                                <div class="applicant-score">⭐ 잘 맞는 정도 65점</div>
-                                <div class="save-actions">
-                                    <button class="save-button" type="button" onclick="togglePartnerPreference(this, '박영호', 'preferred')">♡ 다시 함께하고 싶어요</button>
-                                </div>
-                            </div>
+                            <div class="header-bar">지원자 목록</div>
+                            <div id="applicantPanel"></div>
                         </div>
                     </div>
                     <div class="screen-title">
@@ -3344,32 +3324,8 @@
                 <div class="screen-card">
                     <div class="screen-phone">
                         <div class="screen-content">
-                            <div class="header-bar">지원자 상세: 김철수</div>
-                            <div class="section-title">기본 정보</div>
-                            <div class="detail-row">
-                                <span class="detail-label">나이</span>
-                                <span class="detail-value">26세</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">경력</span>
-                                <span class="detail-value">3년</span>
-                            </div>
-                            <div class="section-title">프로그램 숙련도</div>
-                            <div class="badge-card">게토 마스터</div>
-                            <div class="badge-card">피카 경험</div>
-                            <div class="section-title">운영경험</div>
-                            <div class="detail-row">
-                                <span class="detail-label">야간 근무</span>
-                                <span class="detail-value text-success">✓ 경험</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">혼자 근무</span>
-                                <span class="detail-value text-success">✓ 경험</span>
-                            </div>
-                            <div class="button-group">
-                                <button class="btn btn-primary" type="button" onclick="startInterview('김철수')">면접 진행</button>
-                                <button class="btn btn-secondary" type="button" onclick="declineApplicant('김철수')">거절</button>
-                            </div>
+                            <div class="header-bar">지원자 상세</div>
+                            <div id="applicantDetail"></div>
                         </div>
                     </div>
                     <div class="screen-title">
@@ -3382,31 +3338,12 @@
                 <div class="screen-card">
                     <div class="screen-phone">
                         <div class="screen-content">
-                            <div class="header-bar">18세 미만 채용 준비: 이민지</div>
+                            <div class="header-bar">18세 미만 채용 준비</div>
                             <div class="alert alert-warning">
                                 <strong>⚠️ 꼭 확인할 내용이에요</strong><br/>
                                 모든 항목을 확인해야 채용을 마칠 수 있어요
                             </div>
-                            <div class="checklist">
-                                <li class="checklist-item completed">
-                                    <span class="checklist-icon">✓</span>
-                                    <span>지원서 열람</span>
-                                </li>
-                                <li class="checklist-item completed">
-                                    <span class="checklist-icon">✓</span>
-                                    <span>면접 완료</span>
-                                </li>
-                                <li class="checklist-item">
-                                    <span class="checklist-icon"></span>
-                                    <span><strong>서류 확인 완료</strong><br/><span class="fs-small text-muted">관리자 확인 대기 중</span></span>
-                                </li>
-                                <li class="checklist-item">
-                                    <span class="checklist-icon"></span>
-                                    <span><strong>일하는 약속서 작성</strong><br/><span class="fs-small text-muted">아직 받지 못했어요</span></span>
-                                </li>
-                            </div>
-                            <button class="btn btn-primary" style="opacity: 0.5; cursor: not-allowed;">채용 확정 (필수 항목 미완료)</button>
-                            <button class="btn btn-secondary" type="button" onclick="declineApplicant('이민지')">거절</button>
+                            <div id="hireChecklist"></div>
                         </div>
                     </div>
                     <div class="screen-title">
@@ -3432,31 +3369,7 @@
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">PC방 승인 대기</div>
-                            <div style="font-size: 0.85em; margin-bottom: 8px; color: #667eea; font-weight: 600;">
-                                📋 대기 중: 23건
-                            </div>
-                            <div class="applicant-card">
-                                <div class="applicant-name">강남 PC방</div>
-                                <div style="font-size: 0.85em; color: #666; margin: 4px 0;">
-                                    사업자: 123-45-67890<br/>
-                                    신청일: 2026.09.08
-                                </div>
-                                <div class="button-group">
-                                    <button class="btn btn-primary btn-small" type="button" onclick="reviewStore('강남 PC방', true)">승인</button>
-                                    <button class="btn btn-secondary btn-small" type="button" onclick="reviewStore('강남 PC방', false)">거절</button>
-                                </div>
-                            </div>
-                            <div class="applicant-card">
-                                <div class="applicant-name">명동 PC방</div>
-                                <div style="font-size: 0.85em; color: #666; margin: 4px 0;">
-                                    사업자: 234-56-78901<br/>
-                                    신청일: 2026.09.07
-                                </div>
-                                <div class="button-group">
-                                    <button class="btn btn-primary btn-small" type="button" onclick="reviewStore('명동 PC방', true)">승인</button>
-                                    <button class="btn btn-secondary btn-small" type="button" onclick="reviewStore('명동 PC방', false)">거절</button>
-                                </div>
-                            </div>
+                            <div id="adminShopQueue"></div>
                         </div>
                     </div>
                     <div class="screen-title">
@@ -3470,27 +3383,7 @@
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">18세 미만 파트너 서류 확인</div>
-                            <div style="font-size: 0.85em; margin-bottom: 8px; color: #667eea; font-weight: 600;">
-                                📋 검증 대기: 7건
-                            </div>
-                            <div class="applicant-card">
-                                <div class="applicant-name">이민지 (18세 미만)</div>
-                                <div style="font-size: 0.85em; color: #666; margin: 4px 0;">
-                                    강남 PC방 지원<br/>
-                                    신청: 2026.09.08
-                                </div>
-                                <div style="margin-top: 4px; font-size: 0.85em;">
-                                    <div>✓ 가족관계증명서</div>
-                                    <div>✓ 보호자 동의서</div>
-                                </div>
-                                <div class="button-group">
-                                    <button class="btn btn-primary btn-small" type="button" onclick="reviewMinorDocuments('이민지', true)">승인</button>
-                                    <button class="btn btn-secondary btn-small" type="button" onclick="reviewMinorDocuments('이민지', false)">반려</button>
-                                </div>
-                            </div>
-                            <div class="fs-small text-muted">
-                                📝 모든 접근은 감사 로그 자동 기록
-                            </div>
+                            <div id="adminDocQueue"></div>
                         </div>
                     </div>
                     <div class="screen-title">
@@ -3504,32 +3397,7 @@
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">서비스 안전 점검</div>
-                            <div class="section-title">확인이 필요한 내용</div>
-                            <div class="alert alert-danger">
-                                <strong>⚠️ 최저임금 위반</strong><br/>
-                                <span class="fs-small">서초 PC방 - 9,800원 공고<br/>등록 차단됨</span>
-                            </div>
-                            <div class="alert alert-danger">
-                                <strong>⚠️ 야간 미성년자 근무</strong><br/>
-                                <span class="fs-small">종로 PC방 - 17세 채용<br/>22:00 이후 근무 감지</span>
-                            </div>
-                            <div class="alert alert-success">
-                                <strong>✓ 정상 운영</strong><br/>
-                                <span class="fs-small">총 1,234개소 모니터링 중</span>
-                            </div>
-                            <div class="section-title">서비스 현황</div>
-                            <div class="detail-row">
-                                <span class="detail-label">가입 매장</span>
-                                <span class="detail-value">1,234개</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">채용 완료</span>
-                                <span class="detail-value">567명</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">미성년자 채용</span>
-                                <span class="detail-value">89명</span>
-                            </div>
+                            <div id="complianceBoard"></div>
                         </div>
                     </div>
                     <div class="screen-title">
@@ -3537,58 +3405,52 @@
                         법과 약속을 잘 지키는지 확인해요
                     </div>
                 </div>
+
+                <!-- A4: 배치 작업 · 감사 로그 -->
+                <div class="screen-card">
+                    <div class="screen-phone">
+                        <div class="screen-content">
+                            <div class="header-bar">배치 작업 · 감사 로그</div>
+                            <div id="batchPanel"></div>
+                        </div>
+                    </div>
+                    <div class="screen-title">
+                        <strong>서류 파기 · 최저임금 점검</strong>
+                        정해진 규칙을 날마다 자동으로 지켜요
+                    </div>
+                </div>
+
+                <!-- A5: 매칭 가중치 -->
+                <div class="screen-card">
+                    <div class="screen-phone">
+                        <div class="screen-content">
+                            <div class="header-bar">매칭 가중치</div>
+                            <div id="matchingWeights"></div>
+                        </div>
+                    </div>
+                    <div class="screen-title">
+                        <strong>적합도 점수 조정</strong>
+                        지원자 정렬 기준을 운영 데이터에 맞춰 바꿔요
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- 규칙(법령·매칭·상태 전이)은 백엔드로 옮기기 쉽도록 js/ 폴더에 분리. file://에서도 열리도록 모듈이 아닌 일반 스크립트 -->
+    <script src="js/legal.js"></script>
+    <script src="js/schema.js"></script>
+    <script src="js/matching.js"></script>
+    <script src="js/workflow.js"></script>
+    <script src="js/seed.js"></script>
+    <script src="js/dom.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/ui-partner.js"></script>
+    <script src="js/ui-owner.js"></script>
+    <script src="js/ui-admin.js"></script>
+    <script src="js/app.js"></script>
     <script>
-        // 법령 수치 — 명세서 §0에 따라 하드코딩하지 않고 이 객체 한 곳에서만 관리 (백엔드 도입 시 config/legal.ts로 이전)
-        const LEGAL_CONFIG = {
-            minimumWage: { 2026: 10320, 2027: 10700 },
-            minor: {
-                adultAge: 18,
-                workPermitAge: 15,      // 만 15세 미만은 취직인허증 필요 → MVP에서는 지원 차단 (§10.3)
-                allowedStart: '09:00',
-                allowedEnd: '22:00',
-                maxDailyHours: 8        // 1일 7시간 + 합의 시 1시간 연장 (§3.2)
-            }
-        };
-
-        function getMinimumWage(date = new Date()) {
-            const years = Object.keys(LEGAL_CONFIG.minimumWage).map(Number).sort((a, b) => a - b);
-            const applicable = years.filter(year => year <= date.getFullYear()).pop() ?? years[0];
-            return LEGAL_CONFIG.minimumWage[applicable];
-        }
-
-        function getUpcomingMinimumWage(date = new Date()) {
-            const nextYear = date.getFullYear() + 1;
-            const wage = LEGAL_CONFIG.minimumWage[nextYear];
-            return wage && wage > getMinimumWage(date) ? { year: nextYear, wage } : null;
-        }
-
-        function getAgeClass(age) {
-            if (age >= LEGAL_CONFIG.minor.adultAge) return 'ADULT';
-            if (age >= LEGAL_CONFIG.minor.workPermitAge) return 'MINOR_15_17';
-            return 'MINOR_UNDER_15';
-        }
-
-        // 만 18세 미만에게 보여줄 수 없는 이유 목록 (09:00~22:00 이내, 자정 넘김 없음, 하루 8시간 이내). 빈 배열이면 허용
-        function getMinorBlockReasons(start, end) {
-            if (!start || !end) return ['근무 시간이 입력되지 않았어요'];
-            const { allowedStart, allowedEnd, maxDailyHours } = LEGAL_CONFIG.minor;
-            const startMinutes = timeToMinutes(start);
-            const endMinutes = timeToMinutes(end);
-            if (endMinutes <= startMinutes) return ['자정을 넘기는 근무예요'];
-            const reasons = [];
-            if (startMinutes < timeToMinutes(allowedStart)) reasons.push(`${allowedStart} 이전에 시작해요`);
-            if (endMinutes > timeToMinutes(allowedEnd)) reasons.push(`${allowedEnd} 이후에 끝나요`);
-            if (endMinutes - startMinutes > maxDailyHours * 60) reasons.push(`하루 ${maxDailyHours}시간을 넘어요`);
-            return reasons;
-        }
-
-        function isPostingAllowedForMinor(start, end) {
-            return getMinorBlockReasons(start, end).length === 0;
-        }
+        // 법령 수치와 판정 함수(getMinimumWage, getMinorBlockReasons 등)는 js/legal.js 한 곳에서 관리
 
         const UNDER_15_MESSAGE = '만 15세 미만은 고용노동부 취직인허증이 필요해요. 발급 후 다시 찾아주세요.';
 
@@ -3662,19 +3524,6 @@
             }
         }
 
-        // 생년월일로 나이 계산
-        function calculateAge(birthDateString) {
-            const birthDate = new Date(birthDateString);
-            const today = new Date();
-            let age = today.getFullYear() - birthDate.getFullYear();
-            const monthDiff = today.getMonth() - birthDate.getMonth();
-            
-            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
-            return age;
-        }
-
         // 생년월일 입력 처리
         function handleBirthDateChange() {
             const birthDateInput = document.getElementById('birthDate');
@@ -3723,20 +3572,19 @@
                 return;
             }
 
-            sessionStorage.setItem('userProfile', JSON.stringify({ birthDate: userProfile.birthDate }));
+            // 저장소에는 생년월일만 두고 나이 구분은 매번 다시 계산 (§3.2 ①)
+            const result = Store.run(db => Workflow.setBirthDate(db, db.session.meWorkerId, userProfile.birthDate, new Date()));
+            if (!App.notify(result)) return;
+            PartnerUI.resetDraft();
             filterPostingsByAge();
             alert(`생년월일이 저장되었습니다. (만 ${userProfile.age}세)`);
         }
 
         function restoreUserProfile() {
-            let saved = null;
-            try {
-                saved = JSON.parse(sessionStorage.getItem('userProfile') || 'null');
-            } catch (error) {
-                saved = null;
-            }
-            if (!saved?.birthDate) return false;
-            document.getElementById('birthDate').value = saved.birthDate;
+            const db = Store.get();
+            const worker = db.workers.find(item => item.id === db.session.meWorkerId);
+            if (!worker || !worker.birth_date) return false;
+            document.getElementById('birthDate').value = worker.birth_date;
             handleBirthDateChange();
             filterPostingsByAge();
             return Boolean(userProfile.birthDate);
@@ -3748,10 +3596,11 @@
             applyTheme();
 
             if (userAgeDisplay && userProfile.birthDate) {
-                const { allowedStart, allowedEnd, maxDailyHours } = LEGAL_CONFIG.minor;
+                const { allowedStart, allowedEnd } = LEGAL_CONFIG.minor;
+                const limits = getMinorHourLimits();
                 userAgeDisplay.textContent = {
                     ADULT: `👤 만 ${userProfile.age}세 - 모든 공고를 볼 수 있어요`,
-                    MINOR_15_17: `👤 만 ${userProfile.age}세 - ${allowedStart}~${allowedEnd}, 하루 ${maxDailyHours}시간 이내 공고만 보여드려요`,
+                    MINOR_15_17: `👤 만 ${userProfile.age}세 - ${allowedStart}~${allowedEnd}, 하루 ${limits.daily}시간 · 주 ${limits.weekly}시간 이내 공고만 보여드려요`,
                     MINOR_UNDER_15: `👤 만 ${userProfile.age}세 - ${UNDER_15_MESSAGE}`
                 }[userProfile.ageClass];
             }
@@ -3803,25 +3652,6 @@
             }
         }
 
-        function confirmJobApplication(button) {
-            if (!userProfile.birthDate) {
-                window.alert('지원하려면 먼저 "가입·내 정보"에서 생년월일을 확인해 주세요.');
-                switchAppSubtab('jobseeker', 'profile');
-                return;
-            }
-            if (userProfile.ageClass === 'MINOR_UNDER_15') {
-                window.alert(UNDER_15_MESSAGE);
-                return;
-            }
-            if (userProfile.isMinor && !isPostingAllowedForMinor(button?.dataset.start, button?.dataset.end)) {
-                const { allowedStart, allowedEnd, maxDailyHours } = LEGAL_CONFIG.minor;
-                window.alert(`만 18세 미만은 ${allowedStart}~${allowedEnd} 사이, 하루 ${maxDailyHours}시간 이내 공고에만 지원할 수 있어요.`);
-                return;
-            }
-            const confirmed = window.confirm('이 공고에 지원할까요?\n내 정보와 원하는 근무 조건이 매장에 전달돼요.');
-            if (confirmed) window.alert('지원서가 전달됐어요. 매장에서 확인하면 내 지원 현황에서 볼 수 있어요.');
-        }
-
         function sendPhoneCode() {
             const phone = document.getElementById('phoneJobseeker');
             if (!phone || phone.value.replace(/[^0-9]/g, '').length < 10) {
@@ -3831,69 +3661,7 @@
             window.alert('인증번호를 보냈어요. 문자로 온 번호를 입력해 주세요.');
         }
 
-        function savePartnerProfile() {
-            window.alert('내 정보와 알림 설정을 저장했어요. 이제 나에게 맞는 공고를 찾아볼 수 있어요.');
-            switchAppSubtab('jobseeker', 'jobs', document.querySelector('#jobseeker .app-subnav button'));
-        }
-
-        function choosePartnerDocument() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*,.pdf';
-            input.onchange = () => {
-                if (input.files?.length) window.alert(`${input.files[0].name} 파일을 선택했어요.`);
-            };
-            input.click();
-        }
-
-        function startInterview(partnerName) {
-            window.alert(`${partnerName} 파트너에게 면접 제안을 보냈어요.`);
-        }
-
-        function declineApplicant(partnerName) {
-            const confirmed = window.confirm(`${partnerName} 파트너에게 이번에는 함께하기 어렵다는 안내를 보낼까요?`);
-            if (confirmed) window.alert('안내를 보냈어요. 서로 예의를 지키는 메시지로 전달됩니다.');
-        }
-
-        function reviewStore(storeName, approved) {
-            window.alert(`${storeName} 매장을 ${approved ? '승인' : '거절'} 처리했어요.`);
-        }
-
-        function reviewMinorDocuments(partnerName, approved) {
-            window.alert(`${partnerName} 파트너의 서류를 ${approved ? '승인' : '반려'} 처리했어요.`);
-        }
-
-        function confirmStoreRegistration() {
-            const confirmed = window.confirm('매장 등록을 신청할까요?\n매장 정보와 위치 안내를 확인한 뒤 검토해요.');
-            if (confirmed) window.alert('매장 등록 신청이 접수됐어요. 결과는 알림으로 알려드려요.');
-        }
-
-        // 최저임금 미만 공고는 경고가 아니라 등록 차단 + 원터치 보정 (§3.1)
-        function confirmJobPosting() {
-            const wage = Number(document.getElementById('wageInput')?.value || 0);
-            const minimumWage = getMinimumWage();
-            if (!wage) {
-                window.alert('시급을 입력해 주세요.');
-                return;
-            }
-            if (wage < minimumWage) {
-                updateWageGuide();
-                const fix = window.confirm(`시급 ${wage.toLocaleString()}원은 올해 최저임금 ${minimumWage.toLocaleString()}원보다 낮아 등록할 수 없어요.\n\n최저임금으로 맞출까요?`);
-                if (fix) setWageToMinimum();
-                return;
-            }
-            const shiftStart = document.getElementById('shiftStart')?.value;
-            const shiftEnd = document.getElementById('shiftEnd')?.value;
-            if (!shiftStart || !shiftEnd) {
-                window.alert('근무 시작·종료 시간을 입력해 주세요.');
-                return;
-            }
-            const minorLine = isPostingAllowedForMinor(shiftStart, shiftEnd)
-                ? '만 18세 미만: 지원 가능 (채용 시 서류 확인 필요)'
-                : '만 18세 미만: 근무 시간 때문에 공고가 보이지 않아요';
-            const confirmed = window.confirm(`이 공고를 등록할까요?\n근무 ${shiftStart}~${shiftEnd} · ${minorLine}\n입력한 조건이 스팟 파트너에게 보여요. 가까운 파트너에게 알림도 보낼 수 있어요.`);
-            if (confirmed) window.alert('공고가 등록됐어요. 파트너가 확인하면 지원자 목록에서 볼 수 있어요.');
-        }
+        // 지원·매장 등록·공고 등록 등 데이터가 바뀌는 처리는 js/ui-partner.js · ui-owner.js · ui-admin.js 에서 Workflow 규칙으로 실행
 
         function updatePushPreference() {
             const toggle = document.getElementById('shortPushToggle');
@@ -3946,7 +3714,7 @@
             shortWageRange.textContent = guide.short;
             wageGuideValue.textContent = `${currentWage.toLocaleString()}원`;
             if (wageGuideNote) {
-                const termNote = jobTerm.value.includes('시간') ? '스팟 모집은 즉시성 때문에 참고 범위의 상단을 검토해 보세요. ' : '';
+                const termNote = jobTerm.value === 'SPOT' ? '스팟 모집은 즉시성 때문에 참고 범위의 상단을 검토해 보세요. ' : '';
                 const upcoming = getUpcomingMinimumWage();
                 const upcomingNote = upcoming && currentWage < upcoming.wage
                     ? ` ${upcoming.year}년 1월 1일부터 최저임금이 ${upcoming.wage.toLocaleString()}원으로 올라요. 그보다 낮은 공고는 그때 다시 확인을 요청드려요.`
@@ -3975,8 +3743,10 @@
             if (!box) return;
             const start = document.getElementById('shiftStart')?.value;
             const end = document.getElementById('shiftEnd')?.value;
-            const { allowedStart, allowedEnd, maxDailyHours } = LEGAL_CONFIG.minor;
-            const reasons = getMinorBlockReasons(start, end);
+            const workDays = [...document.querySelectorAll('input[name="workDay"]:checked')].map(input => input.value);
+            const { allowedStart, allowedEnd } = LEGAL_CONFIG.minor;
+            const limits = getMinorHourLimits();
+            const reasons = getMinorBlockReasons(start, end, workDays);
             const allowed = reasons.length === 0;
 
             box.className = `alert ${!start || !end ? 'alert-warning' : allowed ? 'alert-success' : 'alert-warning'}`;
@@ -3988,7 +3758,7 @@
                 textElement('strong', allowed ? '✓ 이 공고는 만 18세 미만도 지원할 수 있어요' : '만 18세 미만에게는 보이지 않는 공고예요'),
                 textElement('div', allowed
                     ? '채용 시 서류 2종이 필요하며, 앱에서 대신 받아드려요.'
-                    : `이유: ${reasons.join(', ')}. 만 18세 미만은 ${allowedStart}~${allowedEnd}, 하루 ${maxDailyHours}시간 이내만 일할 수 있어요.`)
+                    : `이유: ${reasons.join(', ')}. 만 18세 미만은 ${allowedStart}~${allowedEnd}, 하루 ${limits.daily}시간 · 주 ${limits.weekly}시간 이내만 일할 수 있어요.`)
             );
         }
 
@@ -4154,48 +3924,39 @@
             status.textContent = message;
         }
 
-        function toggleStorePreference(button, storeName, preference) {
-            const preferences = readSavedPreferences('spotjobStorePreferences');
-            const current = preferences[storeName] || {};
-            const nextValue = !current[preference];
-            preferences[storeName] = nextValue ? { [preference]: true } : {};
-            writeSavedPreferences('spotjobStorePreferences', preferences);
-            restoreSavedPreferences();
-            setSaveStatus(button, nextValue
-                ? (preference === 'interest' ? `${storeName} 새 공고 알림을 켰어요.` : `${storeName} 알림을 껐어요.`)
-                : `${storeName} 설정을 지웠어요.`);
-        }
+        const PREFERENCE_KEYS = { store: 'spotjobStorePreferences', partner: 'spotjobPartnerPreferences' };
 
-        function togglePartnerPreference(button, partnerName, preference) {
-            const preferences = readSavedPreferences('spotjobPartnerPreferences');
-            const nextValue = !preferences[partnerName]?.[preference];
-            preferences[partnerName] = nextValue ? { [preference]: true } : {};
-            writeSavedPreferences('spotjobPartnerPreferences', preferences);
+        // 관심 매장 · 다시 함께하고 싶은 파트너 (버튼의 data 속성으로 대상 구분)
+        function togglePreference(button) {
+            const { prefKind, prefName, prefKey } = button.dataset;
+            const storageKey = PREFERENCE_KEYS[prefKind];
+            const preferences = readSavedPreferences(storageKey);
+            const nextValue = !preferences[prefName]?.[prefKey];
+            preferences[prefName] = nextValue ? { [prefKey]: true } : {};
+            writeSavedPreferences(storageKey, preferences);
             restoreSavedPreferences();
-            setSaveStatus(button, nextValue ? `${partnerName}님을 다시 함께하고 싶은 파트너로 저장했어요.` : `${partnerName}님 저장을 지웠어요.`);
+            const messages = {
+                interest: nextValue ? `${prefName} 새 공고 알림을 켰어요.` : `${prefName} 설정을 지웠어요.`,
+                muted: nextValue ? `${prefName} 알림을 껐어요.` : `${prefName} 설정을 지웠어요.`,
+                preferred: nextValue ? `${prefName}님을 다시 함께하고 싶은 파트너로 저장했어요.` : `${prefName}님 저장을 지웠어요.`
+            };
+            setSaveStatus(button, messages[prefKey]);
         }
 
         function restoreSavedPreferences() {
-            const storePreferences = readSavedPreferences('spotjobStorePreferences');
-            document.querySelectorAll('.save-button[onclick*="toggleStorePreference"]').forEach(button => {
-                const match = button.getAttribute('onclick').match(/toggleStorePreference\(this, '([^']+)', '([^']+)'\)/);
-                if (!match) return;
-                const [, storeName, preference] = match;
-                const active = Boolean(storePreferences[storeName]?.[preference]);
+            const saved = {
+                store: readSavedPreferences(PREFERENCE_KEYS.store),
+                partner: readSavedPreferences(PREFERENCE_KEYS.partner)
+            };
+            document.querySelectorAll('.save-button[data-pref-kind]').forEach(button => {
+                const { prefKind, prefName, prefKey } = button.dataset;
+                const active = Boolean(saved[prefKind]?.[prefName]?.[prefKey]);
                 button.classList.toggle('is-active', active);
-                button.textContent = preference === 'interest'
-                    ? (active ? '✓ 관심 매장으로 저장했어요' : '♡ 관심 매장으로 저장해요')
-                    : (active ? '✓ 이 매장 알림을 껐어요' : '🔕 알림을 끄고 싶어요');
-            });
-
-            const partnerPreferences = readSavedPreferences('spotjobPartnerPreferences');
-            document.querySelectorAll('.save-button[onclick*="togglePartnerPreference"]').forEach(button => {
-                const match = button.getAttribute('onclick').match(/togglePartnerPreference\(this, '([^']+)', '([^']+)'\)/);
-                if (!match) return;
-                const [, partnerName, preference] = match;
-                const active = Boolean(partnerPreferences[partnerName]?.[preference]);
-                button.classList.toggle('is-active', active);
-                button.textContent = active ? '✓ 다시 함께하고 싶은 파트너' : '♡ 다시 함께하고 싶어요';
+                button.textContent = {
+                    interest: active ? '✓ 관심 매장으로 저장했어요' : '♡ 관심 매장으로 저장해요',
+                    muted: active ? '✓ 이 매장 알림을 껐어요' : '🔕 알림을 끄고 싶어요',
+                    preferred: active ? '✓ 다시 함께하고 싶은 파트너' : '♡ 다시 함께하고 싶어요'
+                }[prefKey];
             });
         }
 
@@ -4259,11 +4020,6 @@
             link.download = '간편_근로계약서_초안.txt';
             link.click();
             URL.revokeObjectURL(url);
-        }
-
-        function timeToMinutes(time) {
-            const [hours, minutes] = time.split(':').map(Number);
-            return (hours * 60) + minutes;
         }
 
         function jobFitsAvailability(item, availableStart, availableEnd) {
@@ -4362,10 +4118,8 @@
                 let show = w3Filters.types.includes(item.dataset.type) &&
                            w3Filters.terms.includes(item.dataset.term);
 
-                // 연소자 하드 룰 — 사용자가 고른 필터보다 먼저 적용
-                if (userProfile.ageClass === 'MINOR_UNDER_15') {
-                    show = false;
-                } else if (show && userProfile.isMinor && !isPostingAllowedForMinor(item.dataset.start, item.dataset.end)) {
+                // §9.1 하드 필터 (연소자 시간·야간 가능 여부·요일) — 사용자가 고른 필터보다 먼저 적용
+                if (show && !PartnerUI.passesHardFilter(item.dataset.postingId)) {
                     show = false;
                 }
 
@@ -4395,6 +4149,11 @@
                 
                 item.style.display = show ? 'block' : 'none';
             });
+
+            const emptyState = document.getElementById('jobListEmpty');
+            if (emptyState) {
+                emptyState.hidden = [...document.querySelectorAll('#jobList .job-item')].some(item => item.style.display !== 'none');
+            }
         }
 
         // 탭 전환
@@ -4477,6 +4236,9 @@
             if (birthDateInput) {
                 birthDateInput.max = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
             }
+
+            // 공유 저장소를 불러와 세 앱 화면을 그림
+            App.init();
 
             // 생년월일이 없으면 가입·내 정보부터 보여줌 (연령 판정이 모든 공고 노출의 전제)
             const hasProfile = restoreUserProfile();
