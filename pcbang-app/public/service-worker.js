@@ -17,6 +17,8 @@ const APP_SHELL = [
   './js/workflow.js',
   './js/seed.js',
   './js/dom.js',
+  './js/nav.js',
+  './js/auth.js',
   './js/store.js',
   './js/ui-partner.js',
   './js/ui-owner.js',
@@ -25,7 +27,12 @@ const APP_SHELL = [
 ];
 
 self.addEventListener('install', event => {
-  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL)));
+  // 파일을 하나씩 담는다. addAll은 22개 중 하나만 실패해도 설치 전체가 무산되어 오프라인이 통째로 꺼진다
+  event.waitUntil(caches.open(CACHE_NAME).then(async cache => {
+    const results = await Promise.allSettled(APP_SHELL.map(url => cache.add(url)));
+    const failed = APP_SHELL.filter((url, index) => results[index].status === 'rejected');
+    if (failed.length) console.warn('오프라인 저장에 실패한 파일:', failed.join(', '));
+  }));
   self.skipWaiting();
 });
 

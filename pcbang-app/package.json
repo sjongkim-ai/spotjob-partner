@@ -1,0 +1,10 @@
+{
+  "name": "spotjob-partner",
+  "version": "0.1.0",
+  "private": true,
+  "description": "스팟잡 파트너 — PC방 알바 매칭 앱 시안 (정적 PWA)",
+  "scripts": {
+    "start": "node serve.js",
+    "test": "node tests/rules.test.js"
+  }
+}

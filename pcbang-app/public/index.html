@@ -2136,22 +2136,9 @@
             box-shadow: 0 4px 0 #0b7079;
         }
 
-        #jobseeker[data-subtab="profile"] .partner-market-map,
-        #jobseeker[data-subtab="profile"] .partner-support-hub,
-        #jobseeker[data-subtab="profile"] .partner-screen-grid .screen-card:not(:nth-child(1)):not(:nth-child(2)),
-        #jobseeker[data-subtab="jobs"] .partner-support-hub,
-        #jobseeker[data-subtab="jobs"] .partner-screen-grid .screen-card:not(:nth-child(3)):not(:nth-child(4)),
-        #jobseeker[data-subtab="applications"] .partner-market-map,
-        #jobseeker[data-subtab="applications"] .partner-support-hub,
-        #jobseeker[data-subtab="applications"] .partner-screen-grid .screen-card:not(:nth-child(5)):not(:nth-child(6)),
-        #jobseeker[data-subtab="help"] .partner-market-map,
-        #jobseeker[data-subtab="help"] .partner-screen-grid,
-        #pcbang[data-subtab="store"] .owner-location-board,
-        #pcbang[data-subtab="store"] .owner-screen-grid .screen-card:not(:nth-child(1)):not(:nth-child(2)),
-        #pcbang[data-subtab="matching"] .owner-helper,
-        #pcbang[data-subtab="matching"] .owner-screen-grid .screen-card:not(:nth-child(3)):not(:nth-child(4)):not(:nth-child(5)) {
-            display: none;
-        }
+        /* 화면(카드·섹션)마다 data-panel로 주제를 적어두고, 아래 바로가기 메뉴가 고른 주제만 보여준다.
+           "몇 번째 카드"를 CSS에 적어두면 카드를 추가할 때마다 어긋나므로 쓰지 않는다 */
+        [hidden] { display: none !important; }
 
         .welcome-hero {
             display: grid;
@@ -2304,6 +2291,19 @@
             color: #eef7ff;
         }
 
+        /* 어두운 사장님 테마에서 어두운 글자가 묻히지 않도록 */
+        body.owner-app .screen-content .job-item-title,
+        body.owner-app .screen-content .job-item-info,
+        body.owner-app .screen-content .applicant-name,
+        body.owner-app .screen-content .option-title,
+        body.owner-app .screen-content .tax-card-title,
+        body.owner-app .screen-content .checklist-item,
+        body.owner-app .screen-content .market-stat strong,
+        body.owner-app .screen-content .market-stat span { color: #eef7ff; }
+
+        body.owner-app .screen-content .market-stat { border-color: #49647b; background: #173650; }
+        body.owner-app .header p { color: rgba(238, 249, 247, 0.78) !important; }
+
         body.owner-app .screen-content .detail-label,
         body.owner-app .screen-content .section-title,
         body.owner-app .screen-content .form-label { color: #d6e6f2; }
@@ -2396,14 +2396,19 @@
             max-width: 390px;
         }
 
-        .landing-menu a {
+        .landing-menu a,
+        .landing-menu button {
             display: flex;
+            width: 100%;
             align-items: center;
             justify-content: space-between;
+            border: 0;
             border-radius: 16px;
             padding: 15px 17px;
             color: #1e2c42;
+            cursor: pointer;
             text-decoration: none;
+            font-family: inherit;
             font-size: 0.94rem;
             font-weight: 900;
             box-shadow: 0 12px 26px rgba(4, 12, 22, 0.16);
@@ -2419,19 +2424,22 @@
             object-fit: cover;
         }
 
-        .landing-menu a > span:first-child {
+        .landing-menu a > span:first-child,
+        .landing-menu button > span:first-child {
             display: inline-flex;
             align-items: center;
         }
 
-        .landing-menu a:hover {
+        .landing-menu a:hover,
+        .landing-menu button:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(38, 54, 83, 0.14);
         }
 
         .landing-menu .owner-login { background: rgba(255, 255, 255, 0.93); }
         .landing-menu .partner-login { background: #b7f2df; color: #124e5a; }
-        .landing-menu a:hover { background: #fff; }
+        .landing-menu a:hover,
+        .landing-menu button:hover { background: #fff; }
         .landing-menu .partner-login:hover { background: #d5faed; }
         .landing-menu .arrow { font-size: 1.2rem; }
 
@@ -2556,6 +2564,73 @@
         body.owner-app .screen-content .intro-text,
         body.owner-app .screen-content .chip,
         body.owner-app .screen-content .empty-state { border-color: #49647b; background: #173650; color: #eef7ff; }
+
+        /* 화면 아래 고정 바로가기 메뉴 — 어느 화면에서나 손이 닿는 자리에 둔다 */
+        .bottom-nav {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 60;
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: 1fr;
+            gap: 2px;
+            padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+            border-top: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.96);
+            box-shadow: 0 -6px 20px rgba(50, 77, 119, 0.12);
+            backdrop-filter: blur(12px);
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            min-height: 52px;
+            padding: 6px 2px;
+            border: 0;
+            border-radius: 12px;
+            background: transparent;
+            color: var(--ink-soft);
+            cursor: pointer;
+            font: inherit;
+            font-size: 0.68rem;
+            font-weight: 800;
+        }
+
+        .bottom-nav-item:hover { background: #f1f7f7; color: var(--teal-deep); }
+        .bottom-nav-item.active { background: #fff0ed; color: var(--coral); }
+        .bottom-nav-icon { font-size: 1.15rem; line-height: 1.1; }
+        .bottom-nav-label { white-space: nowrap; }
+
+        body.landing-mode .bottom-nav { display: none !important; }
+        body.standalone-mode { padding-bottom: 86px; }
+
+        body.owner-app .bottom-nav { border-top-color: rgba(162, 213, 226, 0.2); background: rgba(11, 22, 40, 0.94); }
+        body.owner-app .bottom-nav-item { color: #b5c9d8; }
+        body.owner-app .bottom-nav-item:hover { background: rgba(37, 174, 176, 0.18); color: #7fe3e0; }
+        body.owner-app .bottom-nav-item.active { background: #25aeb0; color: #fff; }
+
+        /* 온보딩 안내 · 사장님 홈 요약 · 지도 핀 종류 */
+        .onboarding-head { margin-bottom: 10px; }
+        .onboarding-head h2 { color: var(--ink); font-family: 'Jua', 'Noto Sans KR', sans-serif; font-size: 1.1rem; font-weight: 400; }
+        .onboarding-card .progress-bar { margin-bottom: 10px; }
+        .status-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+        .status-summary .market-stat strong { font-size: 1.05rem; }
+        .map-empty { display: grid; height: 100%; place-items: center; color: var(--ink-soft); font-size: 0.8rem; }
+        .map-posting { display: block; width: 100%; margin-top: 4px; text-align: left; }
+        .market-pin.type-cvs .pin-icon::after { content: '🏪'; }
+        .market-pin.type-delivery .pin-icon::after { content: '📦'; }
+        .market-pin.type-noodle .pin-icon::after { content: '🍜'; }
+        .market-pin.selected { box-shadow: 0 0 0 7px rgba(255, 125, 115, 0.25), 0 7px 15px rgba(16, 49, 57, 0.3); }
+
+        @media (max-width: 560px) {
+            .bottom-nav { padding: 4px 4px calc(4px + env(safe-area-inset-bottom, 0px)); }
+            .bottom-nav-item { min-height: 48px; font-size: 0.6rem; }
+            .bottom-nav-icon { font-size: 1.05rem; }
+        }
     </style>
 </head>
 <body>
@@ -2567,9 +2642,10 @@
                 <p class="tagline">필요한 순간, 서로에게 딱 맞는 파트너를 만나요.</p>
                 <p class="small-copy">일할 곳을 찾는 파트너와 좋은 사람을 찾는 사장님을 편하게 연결해요.</p>
                 <nav class="landing-menu" aria-label="서비스 시작 메뉴">
-                    <a class="partner-login" href="index.html#jobseeker"><span><img class="kakao-mark" src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="">파트너 카카오톡 로그인</span><span class="arrow" aria-hidden="true">→</span></a>
-                    <a class="owner-login" href="index.html#pcbang"><span><img class="kakao-mark" src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="">사장님 카카오톡 로그인</span><span class="arrow" aria-hidden="true">→</span></a>
+                    <button class="partner-login" type="button" id="partnerLogin" onclick="Auth.signIn('partner')"><span><img class="kakao-mark" src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="">파트너로 시작하기</span><span class="arrow" aria-hidden="true">→</span></button>
+                    <button class="owner-login" type="button" id="ownerLogin" onclick="Auth.signIn('owner')"><span><img class="kakao-mark" src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="">사장님으로 시작하기</span><span class="arrow" aria-hidden="true">→</span></button>
                 </nav>
+                <p class="small-copy">시안이라 실제 카카오 로그인·본인인증은 연결되어 있지 않아요. 역할을 고르면 바로 들어가요.</p>
             </section>
         </div>
     </main>
@@ -2606,20 +2682,14 @@
                 </div>
                 <span class="section-count">파트너 메뉴</span>
             </div>
-            <nav class="app-subnav" aria-label="스팟 파트너 메뉴">
-                <button type="button" data-subtab="profile" onclick="switchAppSubtab('jobseeker', 'profile', this)">👤 가입·내 정보</button>
-                <button class="active" type="button" data-subtab="jobs" onclick="switchAppSubtab('jobseeker', 'jobs', this)">🔎 공고 찾기</button>
-                <button type="button" data-subtab="applications" onclick="switchAppSubtab('jobseeker', 'applications', this)">📌 내 지원·서류</button>
-                <button type="button" data-subtab="help" onclick="switchAppSubtab('jobseeker', 'help', this)">💬 도움방</button>
-            </nav>
-            <section class="welcome-hero" aria-label="스팟잡 파트너 소개">
+            <section class="welcome-hero" data-panel="onboarding" aria-label="스팟잡 파트너 소개">
                 <div class="welcome-copy">
                     <div class="eyebrow">오늘도 잘 해낼 수 있어요</div>
                     <h2>내게 맞는 일을 찾고,<br>안전하게 시작해요.</h2>
                     <p>가까운 공고를 보고, 조건을 쉽게 확인하고, 모르는 건 비밀 지니에게 물어봐요.</p>
                 </div>
             </section>
-            <section class="support-hub partner-support-hub" aria-label="스팟 파트너 생활 안내와 AI 도움">
+            <section class="support-hub partner-support-hub" data-panel="help" aria-label="스팟 파트너 생활 안내와 AI 도움">
                 <div class="support-hub-head">
                     <div>
                         <div class="support-hub-kicker">처음이어도 괜찮아요</div>
@@ -2643,7 +2713,7 @@
                 </div>
                 <div class="support-disclaimer">이 도움방은 현재 화면 안에서만 대화해요. AI 안내는 일반적인 도움을 위한 내용이에요. 급하거나 위험한 상황은 112, 임금·근로 상담은 고용노동부 1350으로 바로 도움을 요청해요.</div>
             </section>
-            <section class="market-map partner-market-map" aria-label="현재 모집 중인 매장 지도">
+            <section class="market-map partner-market-map" data-panel="home" aria-label="내 주변 매칭 요청 지도">
                 <div>
                     <div class="market-map-heading">
                         <div>
@@ -2653,18 +2723,9 @@
                         <button class="btn btn-secondary btn-small" type="button" onclick="focusMarketLocation()">📍 내 위치</button>
                     </div>
                     <div class="feature-alert"><strong>이렇게 써요</strong><span>핀을 누르면 모집 인원, 근무시간, 시급, 거리와 위치 안내를 쉽게 확인할 수 있어요.</span></div>
-                    <div class="market-map-canvas" id="marketMapCanvas">
-                        <span class="map-label gangnam">GANGNAM</span>
-                        <span class="map-label myeongdong">MYEONGDONG</span>
-                        <span class="map-label jongno">JONGNO</span>
-                        <button class="market-pin type-pc urgent pin-gangnam" type="button" aria-label="강남 PC방 긴급 스팟 1명 월간 2명" onclick="selectMarketPin(this, '강남 PC방', '⚡ 긴급 · 오늘 22:00까지', '스팟 1명 · 월간 2명', '18:00 ~ 23:00', '시급 12,000원', '1.8km')"><span class="pin-icon"></span><span class="pin-demand"><em>스팟 1명</em> · <b>월간 2명</b></span></button>
-                        <button class="market-pin type-cafe soon pin-myeongdong" type="button" aria-label="명동 카페 마감 임박 스팟 2명 월간 1명" onclick="selectMarketPin(this, '명동 카페', '마감 임박 · 오늘 24:00까지', '스팟 2명 · 월간 1명', '22:00 ~ 07:00', '시급 13,000원', '4.2km')"><span class="pin-icon"></span><span class="pin-demand"><em>스팟 2명</em> · <b>월간 1명</b></span></button>
-                        <button class="market-pin type-comic pin-jongno" type="button" aria-label="종로 만화방 모집중 스팟 0명 월간 2명" onclick="selectMarketPin(this, '종로 만화방', '모집중 · 월간', '스팟 0명 · 월간 2명', '14:00 ~ 22:00', '시급 11,500원', '3.6km')"><span class="pin-icon"></span><span class="pin-demand"><em>스팟 0명</em> · <b>월간 2명</b></span></button>
-                        <button class="market-pin user pin-user" type="button" aria-label="내 위치" onclick="focusMarketLocation()"></button>
-                    </div>
+                    <div class="market-map-canvas" id="marketMapCanvas"></div>
                     <div class="market-legend">
                         <span class="legend-item"><i class="legend-dot urgent"></i>긴급</span>
-                        <span class="legend-item"><i class="legend-dot soon"></i>마감 임박</span>
                         <span class="legend-item"><i class="legend-dot"></i>모집중</span>
                         <span class="legend-item"><i class="legend-dot" style="background: var(--ink);"></i>내 위치</span>
                     </div>
@@ -2685,8 +2746,22 @@
                 </aside>
             </section>
             <div class="screen-grid partner-screen-grid">
+                <!-- 온보딩 안내 (처음 한 번) -->
+                <div class="screen-card onboarding-card" data-panel="onboarding">
+                    <div class="screen-phone">
+                        <div class="screen-content">
+                            <div class="header-bar">시작 준비</div>
+                            <div id="partnerOnboarding"></div>
+                        </div>
+                    </div>
+                    <div class="screen-title">
+                        <strong>처음 한 번만</strong>
+                        본인 확인과 기본 정보를 입력하면 바로 매칭 요청을 봐요
+                    </div>
+                </div>
+
                 <!-- 가입 · 본인 확인 -->
-                <div class="screen-card">
+                <div class="screen-card" data-panel="onboarding profile">
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">가입 · 본인인증</div>
@@ -2697,7 +2772,7 @@
                                 <div class="form-label">📱 휴대폰 번호</div>
                                 <div class="why-note">본인 확인과 중요한 안내를 안전하게 보내드리려고 필요해요.</div>
                                 <input type="text" class="form-input" id="phoneJobseeker" placeholder="010-0000-0000" oninput="formatPhoneNumber(this)" maxlength="13">
-                                <button class="btn btn-primary btn-small" type="button" style="margin-top: 6px; width: 100%;" onclick="sendPhoneCode()">인증번호 받아요</button>
+                                <button class="btn btn-primary btn-small" type="button" style="margin-top: 6px; width: 100%;" onclick="Auth.verifyPhone()">인증번호 받아요</button>
                             </div>
                             <div class="form-group">
                                 <div class="form-label">🔐 인증번호</div>
@@ -2729,7 +2804,7 @@
                 </div>
 
                 <!-- 내 정보 작성 -->
-                <div class="screen-card">
+                <div class="screen-card" data-panel="onboarding profile">
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">내 정보 작성</div>
@@ -2763,7 +2838,7 @@
                 </div>
 
                 <!-- 공고 목록 -->
-                <div class="screen-card">
+                <div class="screen-card" data-panel="home">
                     <div class="screen-phone w3">
                         <div class="screen-content">
                             <div class="header-bar">공고 찾기</div>
@@ -2866,7 +2941,7 @@
                 </div>
 
                 <!-- 공고 상세 -->
-                <div class="screen-card">
+                <div class="screen-card" data-panel="home">
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">공고 상세</div>
@@ -2893,7 +2968,7 @@
                 </div>
 
                 <!-- 내 지원 현황 -->
-                <div class="screen-card">
+                <div class="screen-card" data-panel="applications">
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">내 지원 현황</div>
@@ -2924,7 +2999,7 @@
                 </div>
 
                 <!-- 18세 미만 파트너 서류 -->
-                <div class="screen-card">
+                <div class="screen-card" data-panel="docs">
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">18세 미만 파트너 서류</div>
@@ -2948,18 +3023,14 @@
                 </div>
                 <span class="section-count">사장님 메뉴</span>
             </div>
-            <nav class="app-subnav" aria-label="사장님 메뉴">
-                <button class="active" type="button" data-subtab="store" onclick="switchAppSubtab('pcbang', 'store', this)">🏪 매장·공고</button>
-                <button type="button" data-subtab="matching" onclick="switchAppSubtab('pcbang', 'matching', this)">🤝 지원자·채용</button>
-            </nav>
-            <section class="welcome-hero" aria-label="사장님 서비스 소개">
+            <section class="welcome-hero" data-panel="onboarding" aria-label="사장님 서비스 소개">
                 <div class="welcome-copy">
                     <div class="eyebrow">매장 운영을 조금 더 편하게</div>
                     <h2>믿을 수 있는 파트너를<br>차분하게 만나보세요.</h2>
                     <p>필요한 조건을 분명하게 적고, 잘 맞는 파트너와 오래 좋은 약속을 만들어가요.</p>
                 </div>
             </section>
-            <section class="support-hub owner-helper" aria-label="사장님 채용 도우미">
+            <section class="support-hub owner-helper" data-panel="store" aria-label="사장님 채용 도우미">
                 <div class="support-hub-head">
                     <div>
                         <div class="support-hub-kicker">놓치기 쉬운 조건을 한 번 더</div>
@@ -2977,7 +3048,7 @@
                 <button class="btn btn-secondary" type="button" onclick="runOwnerHiringCheck()">공고를 쉽게 점검하기</button>
                 <div class="owner-check-result" id="ownerHiringCheckResult" aria-live="polite">버튼을 누르면 현재 공고에서 먼저 확인할 항목을 알려드립니다.</div>
             </section>
-            <section class="owner-location-board" aria-label="첫 매칭 위치 확인">
+            <section class="owner-location-board" data-panel="applicants" aria-label="첫 매칭 위치 확인">
                 <div>
                     <div class="market-map-heading">
                         <div>
@@ -3010,8 +3081,36 @@
                 </aside>
             </section>
             <div class="screen-grid owner-screen-grid">
+                <!-- 온보딩 안내 (처음 한 번) -->
+                <div class="screen-card onboarding-card" data-panel="onboarding">
+                    <div class="screen-phone">
+                        <div class="screen-content">
+                            <div class="header-bar">시작 준비</div>
+                            <div id="ownerOnboarding"></div>
+                        </div>
+                    </div>
+                    <div class="screen-title">
+                        <strong>처음 한 번만</strong>
+                        매장을 등록하면 바로 공고 등록 현황으로 들어가요
+                    </div>
+                </div>
+
+                <!-- S0: 공고 등록 현황 (사장님 홈) -->
+                <div class="screen-card" data-panel="status">
+                    <div class="screen-phone">
+                        <div class="screen-content">
+                            <div class="header-bar">공고 등록 현황</div>
+                            <div id="ownerStatusPanel"></div>
+                        </div>
+                    </div>
+                    <div class="screen-title">
+                        <strong>공고 등록 현황</strong>
+                        올린 공고와 지원자 수를 한눈에 봐요
+                    </div>
+                </div>
+
                 <!-- S1: 매장 등록 -->
-                <div class="screen-card">
+                <div class="screen-card" data-panel="onboarding store">
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">매장 등록</div>
@@ -3117,7 +3216,7 @@
                 </div>
 
                 <!-- S2: 공고 등록 -->
-                <div class="screen-card">
+                <div class="screen-card" data-panel="postings">
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">공고 등록</div>
@@ -3296,8 +3395,6 @@
                             </div>
                             <div class="feature-alert warn"><strong>공고 등록 전에 한 번 확인해요</strong><span>시급·근무시간·계약기간·위치·급여 지급일을 확인해요. 등록 후 스팟 파트너에게 보여요.</span></div>
                             <button class="btn btn-primary" type="button" onclick="confirmJobPosting()">공고를 등록해요</button>
-                            <div class="section-title">📋 내 공고</div>
-                            <div id="ownerPostingList"></div>
                         </div>
                     </div>
                     <div class="screen-title">
@@ -3307,7 +3404,7 @@
                 </div>
 
                 <!-- S3: 지원자 목록 -->
-                <div class="screen-card">
+                <div class="screen-card" data-panel="applicants">
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">지원자 목록</div>
@@ -3321,7 +3418,7 @@
                 </div>
 
                 <!-- S4: 지원자 상세 -->
-                <div class="screen-card">
+                <div class="screen-card" data-panel="applicants">
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">지원자 상세</div>
@@ -3335,7 +3432,7 @@
                 </div>
 
                 <!-- S5: 연소자 채용 체크리스트 -->
-                <div class="screen-card">
+                <div class="screen-card" data-panel="hiring">
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">18세 미만 채용 준비</div>
@@ -3355,7 +3452,7 @@
         </div>
 
         <!-- 어드민 섹션 -->
-        <div id="admin" class="content-section">
+        <div id="admin" class="content-section" data-subtab="shops">
             <div class="app-section-heading">
                 <div>
                     <h2>어드민 앱</h2>
@@ -3365,7 +3462,7 @@
             </div>
             <div class="screen-grid">
                 <!-- A1: PC방 승인 큐 -->
-                <div class="screen-card">
+                <div class="screen-card" data-panel="shops">
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">PC방 승인 대기</div>
@@ -3379,7 +3476,7 @@
                 </div>
 
                 <!-- A2: 연소자 서류 검증 -->
-                <div class="screen-card">
+                <div class="screen-card" data-panel="docs">
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">18세 미만 파트너 서류 확인</div>
@@ -3393,7 +3490,7 @@
                 </div>
 
                 <!-- A3: 컴플라이언스 대시보드 -->
-                <div class="screen-card">
+                <div class="screen-card" data-panel="compliance">
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">서비스 안전 점검</div>
@@ -3407,7 +3504,7 @@
                 </div>
 
                 <!-- A4: 배치 작업 · 감사 로그 -->
-                <div class="screen-card">
+                <div class="screen-card" data-panel="batch">
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">배치 작업 · 감사 로그</div>
@@ -3421,7 +3518,7 @@
                 </div>
 
                 <!-- A5: 매칭 가중치 -->
-                <div class="screen-card">
+                <div class="screen-card" data-panel="matching">
                     <div class="screen-phone">
                         <div class="screen-content">
                             <div class="header-bar">매칭 가중치</div>
@@ -3437,6 +3534,9 @@
         </div>
     </div>
 
+    <!-- 어느 화면에서나 보이는 바로가기 메뉴 (앱마다 주제별 탭) -->
+    <nav class="bottom-nav" id="bottomNav" aria-label="바로가기 메뉴" hidden></nav>
+
     <!-- 규칙(법령·매칭·상태 전이)은 백엔드로 옮기기 쉽도록 js/ 폴더에 분리. file://에서도 열리도록 모듈이 아닌 일반 스크립트 -->
     <script src="js/legal.js"></script>
     <script src="js/schema.js"></script>
@@ -3444,6 +3544,8 @@
     <script src="js/workflow.js"></script>
     <script src="js/seed.js"></script>
     <script src="js/dom.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/auth.js"></script>
     <script src="js/store.js"></script>
     <script src="js/ui-partner.js"></script>
     <script src="js/ui-owner.js"></script>
@@ -4180,13 +4282,15 @@
             document.body.classList.toggle('partner-app', tabName === 'jobseeker');
         }
 
+        // 아래 바로가기 메뉴가 고른 주제(data-panel)에 해당하는 화면만 보여준다
         function switchAppSubtab(appName, subtabName) {
             const app = document.getElementById(appName);
             if (!app) return;
             app.dataset.subtab = subtabName;
-            app.querySelectorAll('.app-subnav button').forEach(item => {
-                item.classList.toggle('active', item.dataset.subtab === subtabName);
+            app.querySelectorAll('[data-panel]').forEach(panel => {
+                panel.hidden = !panel.dataset.panel.split(' ').includes(subtabName);
             });
+            window.Nav?.syncActive(appName, subtabName);
         }
 
         function switchTab(tabName) {
@@ -4203,6 +4307,7 @@
             const installMeta = APP_INSTALL_META[isAppRoute ? tabName : 'landing'];
             document.getElementById('appManifest')?.setAttribute('href', installMeta.manifest);
             document.getElementById('appThemeColor')?.setAttribute('content', installMeta.themeColor);
+            window.Nav?.render(isAppRoute ? tabName : null);
             if (!isAppRoute) return;
 
             document.querySelectorAll('.content-section').forEach(section => {
@@ -4240,10 +4345,11 @@
             // 공유 저장소를 불러와 세 앱 화면을 그림
             App.init();
 
-            // 생년월일이 없으면 가입·내 정보부터 보여줌 (연령 판정이 모든 공고 노출의 전제)
-            const hasProfile = restoreUserProfile();
-            switchAppSubtab('jobseeker', hasProfile ? 'jobs' : 'profile');
-            switchAppSubtab('pcbang', 'store');
+            // 로그인 후 첫 진입이면 온보딩, 이미 끝냈으면 각 앱의 홈으로
+            restoreUserProfile();
+            switchAppSubtab('jobseeker', Auth.isOnboarded('partner') ? 'home' : 'onboarding');
+            switchAppSubtab('pcbang', Auth.isOnboarded('owner') ? 'status' : 'onboarding');
+            switchAppSubtab('admin', 'shops');
             // 업종 선택 필드 초기화
             handleBusinessTypeChange();
             updateRecruitmentOptions();
@@ -4262,8 +4368,11 @@
 
             applyW3Filters();
             restoreSavedPreferences();
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./service-worker.js').catch(() => {});
+            // 오프라인·설치는 서비스워커가 필요하다. 실패를 조용히 넘기면 안 되는 걸 아무도 모르게 되므로 기록한다
+            // (file://로 열면 등록되지 않는 게 정상이다. 서버로 열어야 한다)
+            if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .catch(error => console.warn('서비스워커 등록 실패 — 오프라인·설치가 동작하지 않아요:', error.message));
             }
 
                 // W3 필터 체크박스 변경 이벤트 핸들러

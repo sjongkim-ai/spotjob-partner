@@ -5,6 +5,7 @@
     'use strict';
 
     function renderAll() {
+        root.Auth.render();
         root.PartnerUI.render();
         root.OwnerUI.render();
         root.AdminUI.render();

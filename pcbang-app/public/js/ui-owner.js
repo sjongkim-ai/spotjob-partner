@@ -265,9 +265,32 @@
         root.App.notify(root.Store.run(db => root.Workflow.reopenPosting(db, posting.id, OWNER, now(), patch)), '공고를 다시 게시했어요.');
     }
 
+    // 사장님 홈 = 공고 등록 현황 (요약 + 올린 공고)
+    function ownerSummary() {
+        const db = getDb();
+        const shop = currentShop();
+        const postings = shop ? db.postings.filter(posting => posting.shop_id === shop.id) : [];
+        const ids = postings.map(posting => posting.id);
+        const applications = db.applications.filter(application => ids.includes(application.posting_id) && application.status !== 'WITHDRAWN');
+        const stat = (value, label) => h('div', { class: 'market-stat' }, h('strong', {}, String(value)), h('span', {}, label));
+        return [
+            h('div', { class: 'status-summary' },
+                stat(postings.filter(posting => posting.status === 'OPEN').length, '모집 중'),
+                stat(applications.length, '지원자'),
+                stat(applications.filter(application => ['APPLIED', 'VIEWED'].includes(application.status)).length, '확인 대기'),
+                stat(applications.filter(application => application.status === 'HIRED').length, '채용 완료')),
+            h('button', {
+                class: 'btn btn-primary', type: 'button', id: 'goPostingForm', style: 'margin: 10px 0;',
+                onclick: () => root.switchAppSubtab('pcbang', 'postings')
+            }, '+ 새 공고 올리기')
+        ];
+    }
+
     function renderOwnerPostings() {
+        const statusPanel = document.getElementById('ownerStatusPanel');
+        if (!statusPanel) return;
+        mount(statusPanel, ownerSummary(), h('div', { class: 'section-title' }, '📋 올린 공고'), h('div', { id: 'ownerPostingList' }));
         const container = document.getElementById('ownerPostingList');
-        if (!container) return;
         const shop = currentShop();
         const db = getDb();
         const postings = shop ? db.postings.filter(posting => posting.shop_id === shop.id).slice().reverse() : [];
@@ -286,7 +309,7 @@
                 h('div', { class: 'save-actions' },
                     h('button', {
                         class: 'save-button', type: 'button', dataset: { action: 'applicants' },
-                        onclick: () => { setSession({ ownerPostingId: posting.id, selectedApplicationId: null }); root.switchAppSubtab('pcbang', 'matching'); }
+                        onclick: () => { setSession({ ownerPostingId: posting.id, selectedApplicationId: null }); root.switchAppSubtab('pcbang', 'applicants'); }
                     }, '지원자 보기'),
                     ['OPEN', 'FILLED'].includes(posting.status) ? h('button', { class: 'save-button muted', type: 'button', dataset: { action: 'close' }, onclick: () => closePosting(posting) }, '마감하기') : null,
                     posting.status === 'CLOSED' ? h('button', { class: 'save-button', type: 'button', dataset: { action: 'reopen' }, onclick: () => reopenPosting(posting) }, '다시 게시하기') : null));

@@ -211,7 +211,7 @@
             renderWizard();
         } else {
             root.alert('내 정보를 저장했어요. 이제 나에게 맞는 공고를 찾아볼 수 있어요.');
-            root.switchAppSubtab('jobseeker', 'jobs');
+            root.switchAppSubtab('jobseeker', 'home');
         }
     }
 
@@ -258,6 +258,93 @@
         const container = document.getElementById('jobList');
         if (!container) return;
         mount(container, getDb().postings.filter(posting => posting.status === 'OPEN').map(jobItem));
+    }
+
+    // 매칭 요청 지도 — 모집 중인 공고를 매장 좌표로 찍는다 (고정된 그림이 아니라 실제 데이터)
+    const PIN_TYPE = { pcbang: 'pc', cafe: 'cafe', comic: 'comic', cvs: 'cvs', delivery: 'delivery', noodle: 'noodle' };
+
+    function renderMarketMap() {
+        const canvas = document.getElementById('marketMapCanvas');
+        if (!canvas) return;
+        const db = getDb();
+        const worker = me();
+        const points = db.postings
+            .filter(posting => posting.status === 'OPEN')
+            .map(posting => ({ posting, shop: shopOf(posting) }))
+            .filter(entry => entry.shop && entry.shop.geo);
+        const geos = points.map(entry => entry.shop.geo).concat(worker.home_geo ? [worker.home_geo] : []);
+        if (!geos.length) {
+            mount(canvas, h('div', { class: 'map-empty' }, '지금은 모집 중인 매장이 없어요.'));
+            return;
+        }
+        const pad = 0.004;
+        const minLat = Math.min(...geos.map(geo => geo.lat)) - pad;
+        const maxLat = Math.max(...geos.map(geo => geo.lat)) + pad;
+        const minLng = Math.min(...geos.map(geo => geo.lng)) - pad;
+        const maxLng = Math.max(...geos.map(geo => geo.lng)) + pad;
+        const place = geo => `left: ${(((geo.lng - minLng) / (maxLng - minLng || 1)) * 78 + 11).toFixed(1)}%; top: ${((1 - (geo.lat - minLat) / (maxLat - minLat || 1)) * 66 + 14).toFixed(1)}%;`;
+
+        // 같은 매장의 공고는 좌표가 같아 핀이 포개지므로 매장 단위로 묶는다
+        const byShop = new Map();
+        points.forEach(({ posting, shop }) => {
+            if (!byShop.has(shop.id)) byShop.set(shop.id, { shop, postings: [] });
+            byShop.get(shop.id).postings.push(posting);
+        });
+
+        mount(canvas,
+            worker.home_geo ? h('button', {
+                class: 'market-pin user', type: 'button', style: place(worker.home_geo), 'aria-label': '내 위치',
+                onclick: () => root.focusMarketLocation()
+            }) : null,
+            [...byShop.values()].map(({ shop, postings }) => {
+                const headcount = postings.reduce((total, posting) => total + posting.headcount, 0);
+                const urgent = postings.some(posting => posting.urgent);
+                const selected = postings.some(posting => posting.id === db.session.selectedPostingId);
+                return h('button', {
+                    class: `market-pin type-${PIN_TYPE[postings[0].business_type] || 'pc'}${urgent ? ' urgent' : ''}${selected ? ' selected' : ''}`,
+                    type: 'button', style: place(shop.geo), dataset: { shopId: shop.id, postingCount: String(postings.length) },
+                    'aria-label': `${shop.name} 공고 ${postings.length}건 · ${headcount}명 모집`,
+                    onclick: () => selectFromMap(shop.id)
+                },
+                h('span', { class: 'pin-icon' }),
+                h('span', { class: 'pin-demand' }, `${shop.name} · ${postings.length > 1 ? `공고 ${postings.length}건` : `${headcount}명`}`));
+            }));
+
+        const summary = document.querySelector('.market-summary');
+        if (summary) {
+            const stat = (value, label) => h('div', { class: 'market-stat' }, h('strong', {}, String(value)), h('span', {}, label));
+            mount(summary,
+                stat(points.length, '모집 중'),
+                stat(points.filter(entry => entry.posting.urgent).length, '긴급'),
+                stat(`${worker.commute_radius_km || 5}km`, '내 활동 범위'));
+        }
+    }
+
+    // 핀을 누르면 그 매장의 모집 중 공고를 모두 보여주고, 고르면 상세로 이어진다
+    function selectFromMap(shopId) {
+        const db = getDb();
+        const shop = db.shops.find(item => item.id === shopId);
+        const postings = db.postings.filter(posting => posting.status === 'OPEN' && posting.shop_id === shopId);
+        if (!shop || !postings.length) return;
+        if (!postings.some(posting => posting.id === db.session.selectedPostingId)) selectPosting(postings[0].id);
+        renderMapSelection(shopId);
+    }
+
+    function renderMapSelection(shopId) {
+        const db = getDb();
+        const shop = db.shops.find(item => item.id === shopId);
+        const postings = db.postings.filter(posting => posting.status === 'OPEN' && posting.shop_id === shopId);
+        const selection = document.getElementById('marketSelection');
+        if (!selection || !shop) return;
+        const distance = root.Matching.distanceKm(me().home_geo, shop.geo);
+        mount(selection,
+            h('strong', {}, `📍 ${shop.name}`),
+            h('p', {}, `${distance === null ? '' : `약 ${distance.toFixed(1)}km · `}모집 중 공고 ${postings.length}건`),
+            postings.map(posting => h('button', {
+                class: `save-button map-posting${db.session.selectedPostingId === posting.id ? ' is-active' : ''}`,
+                type: 'button', dataset: { postingId: posting.id },
+                onclick: () => { selectPosting(posting.id); renderMapSelection(shopId); }
+            }, `${posting.title} · ${posting.shift_start}~${posting.shift_end} · ${fmtWon(posting.hourly_wage)}`)));
     }
 
     // §9.1 하드 필터. 거리는 목록 위 "검색 반경"이 따로 거르므로 여기서는 제외
@@ -497,6 +584,7 @@
 
     function render() {
         renderWizard();
+        renderMarketMap();
         renderJobList();
         renderPostingDetail();
         renderMyApplications();
