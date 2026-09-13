@@ -2565,53 +2565,116 @@
         body.owner-app .screen-content .chip,
         body.owner-app .screen-content .empty-state { border-color: #49647b; background: #173650; color: #eef7ff; }
 
-        /* 화면 아래 고정 바로가기 메뉴 — 어느 화면에서나 손이 닿는 자리에 둔다 */
+        /* 화면 아래 떠 있는 바로가기 메뉴 — 어느 화면에서나 손이 닿는 자리에 둔다.
+           고른 칸 뒤로 물방울이 흘러가 지금 어디에 있는지 한눈에 보이게 한다 */
         .bottom-nav {
             position: fixed;
-            right: 0;
-            bottom: 0;
-            left: 0;
+            right: 10px;
+            bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+            left: 10px;
             z-index: 60;
             display: grid;
             grid-auto-flow: column;
             grid-auto-columns: 1fr;
-            gap: 2px;
-            padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
-            border-top: 1px solid var(--line);
-            background: rgba(255, 255, 255, 0.96);
-            box-shadow: 0 -6px 20px rgba(50, 77, 119, 0.12);
-            backdrop-filter: blur(12px);
+            align-items: center;
+            padding: 5px 6px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 34px;
+            background: rgba(255, 255, 255, 0.94);
+            box-shadow: 0 15px 35px rgba(50, 77, 119, 0.26), 0 2px 8px rgba(50, 77, 119, 0.1);
+            backdrop-filter: blur(20px);
         }
 
+        /* 물방울. 칸의 너비(--blob-w)와 자리(--blob-x)는 nav.js가 재어 넣는다 */
+        .bottom-nav-blob {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: var(--blob-w, 0px);
+            height: calc(100% + 22px);
+            opacity: var(--blob-on, 0);
+            transform: translate(var(--blob-x, 0px), -50%);
+            pointer-events: none;
+            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1), width 0.35s ease, opacity 0.25s ease;
+        }
+
+        .bottom-nav-blob::before {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 46% 54% 52% 48% / 45% 42% 58% 55%;
+            background: linear-gradient(145deg, #45cac4 0%, #1f9aa4 42%, #168c98 70%, #35c4c6 100%);
+            box-shadow:
+                0 12px 26px rgba(22, 140, 152, 0.42),
+                inset 0 3px 6px rgba(255, 255, 255, 0.4),
+                inset 0 -4px 8px rgba(9, 60, 66, 0.25);
+            animation: navBlobMorph 6s ease-in-out infinite alternate;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes navBlobMorph {
+            0% { border-radius: 46% 54% 52% 48% / 45% 42% 58% 55%; }
+            33% { border-radius: 58% 42% 47% 53% / 54% 58% 42% 46%; }
+            66% { border-radius: 41% 59% 45% 55% / 43% 41% 59% 57%; }
+            100% { border-radius: 52% 48% 60% 40% / 50% 55% 45% 50%; }
+        }
+
+        /* 옮겨가는 쪽으로 방울이 살짝 늘어나 액체처럼 보이게 한다 */
+        .bottom-nav-blob.stretch-right::before { transform: scale(1.2, 0.8) skewX(-14deg); }
+        .bottom-nav-blob.stretch-left::before { transform: scale(1.2, 0.8) skewX(14deg); }
+
         .bottom-nav-item {
+            position: relative;
+            z-index: 2;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             gap: 2px;
-            min-height: 52px;
+            min-height: 54px;
             padding: 6px 2px;
             border: 0;
-            border-radius: 12px;
+            border-radius: 26px;
             background: transparent;
             color: var(--ink-soft);
             cursor: pointer;
             font: inherit;
-            font-size: 0.68rem;
+            font-size: 0.66rem;
             font-weight: 800;
+            transition: color 0.35s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .bottom-nav-item:hover { background: #f1f7f7; color: var(--teal-deep); }
-        .bottom-nav-item.active { background: #fff0ed; color: var(--coral); }
-        .bottom-nav-icon { font-size: 1.15rem; line-height: 1.1; }
+        .bottom-nav-item:hover { color: var(--teal-deep); }
+        .bottom-nav-item:active { transform: scale(0.9); }
+        .bottom-nav-item.active { color: #fff; }
+        .bottom-nav-item.active .bottom-nav-icon { transform: translateY(-2px) scale(1.12); }
+        .bottom-nav-item.active .bottom-nav-label { text-shadow: 0 1px 3px rgba(9, 60, 66, 0.35); }
+        .bottom-nav-icon { font-size: 1.12rem; line-height: 1.1; transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .bottom-nav-label { white-space: nowrap; }
 
         body.landing-mode .bottom-nav { display: none !important; }
-        body.standalone-mode { padding-bottom: 86px; }
+        body.standalone-mode { padding-bottom: 108px; }
 
-        body.owner-app .bottom-nav { border-top-color: rgba(162, 213, 226, 0.2); background: rgba(11, 22, 40, 0.94); }
+        body.owner-app .bottom-nav { border-color: rgba(162, 213, 226, 0.22); background: rgba(11, 22, 40, 0.92); box-shadow: 0 15px 35px rgba(3, 12, 24, 0.5), 0 2px 8px rgba(3, 12, 24, 0.3); }
         body.owner-app .bottom-nav-item { color: #b5c9d8; }
-        body.owner-app .bottom-nav-item:hover { background: rgba(37, 174, 176, 0.18); color: #7fe3e0; }
-        body.owner-app .bottom-nav-item.active { background: #25aeb0; color: #fff; }
+        body.owner-app .bottom-nav-item:hover { color: #7fe3e0; }
+        body.owner-app .bottom-nav-item.active { color: #fff; }
+        body.owner-app .bottom-nav-blob::before {
+            background: linear-gradient(145deg, #37d3cf 0%, #25aeb0 45%, #168c98 75%, #3ccdd8 100%);
+            box-shadow:
+                0 12px 26px rgba(37, 174, 176, 0.45),
+                inset 0 3px 6px rgba(255, 255, 255, 0.32),
+                inset 0 -4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 움직임을 줄여달라고 한 기기에서는 방울을 조용히 둔다 */
+        @media (prefers-reduced-motion: reduce) {
+            .bottom-nav-blob,
+            .bottom-nav-blob::before,
+            .bottom-nav-item,
+            .bottom-nav-icon { transition: none; animation: none; }
+        }
 
         /* 온보딩 안내 · 사장님 홈 요약 · 지도 핀 종류 */
         .onboarding-head { margin-bottom: 10px; }
@@ -2627,9 +2690,9 @@
         .market-pin.selected { box-shadow: 0 0 0 7px rgba(255, 125, 115, 0.25), 0 7px 15px rgba(16, 49, 57, 0.3); }
 
         @media (max-width: 560px) {
-            .bottom-nav { padding: 4px 4px calc(4px + env(safe-area-inset-bottom, 0px)); }
-            .bottom-nav-item { min-height: 48px; font-size: 0.6rem; }
-            .bottom-nav-icon { font-size: 1.05rem; }
+            .bottom-nav { right: 8px; left: 8px; bottom: calc(10px + env(safe-area-inset-bottom, 0px)); padding: 4px 5px; }
+            .bottom-nav-item { min-height: 50px; font-size: 0.58rem; }
+            .bottom-nav-icon { font-size: 1.02rem; }
         }
     </style>
 </head>
